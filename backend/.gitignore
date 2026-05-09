@@ -1,0 +1,28 @@
+# Maven target directory
+target/
+
+# IntelliJ / IDEA project files
+.idea/
+*.iml
+
+# Eclipse/VSCode project files
+.project
+.classpath
+.settings/
+.vscode/
+
+# MacOS files
+.DS_Store
+
+# Log files
+*.log
+
+# Build output
+*.class
+
+# OS files
+Thumbs.db
+
+# Local environment or secret files (example)
+.env
+index.html

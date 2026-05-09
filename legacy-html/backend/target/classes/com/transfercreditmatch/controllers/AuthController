@@ -1,0 +1,66 @@
+package com.transfercreditmatch.controllers;
+
+import com.transfercreditmatch.dto.LoginRequest;
+import com.transfercreditmatch.dto.RegisterRequest;
+import com.transfercreditmatch.entities.User;
+import com.transfercreditmatch.services.AuthService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    /**
+     * Register endpoint:
+     * Expects JSON like:
+     * {
+     *   "name": "TestUser",
+     *   "email": "test@example.com",
+     *   "password": "mypassword",
+     *   "role": "student"
+     * }
+     */
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        try {
+            // Call the service layer with the fields from RegisterRequest
+            User newUser = authService.register(
+                request.getName(),
+                request.getEmail(),
+                request.getPassword(),
+                request.getRole()  // can be uppercase or mixed case; service will handle
+            );
+            return ResponseEntity.ok("User registered with ID: " + newUser.getUserId());
+        } catch (RuntimeException e) {
+            // Return a 400 with the error message
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Login endpoint:
+     * Expects JSON like:
+     * {
+     *   "email": "test@example.com",
+     *   "password": "mypassword"
+     * }
+     */
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        try {
+            User user = authService.login(request.getEmail(), request.getPassword());
+            // Return a simple success message
+            return ResponseEntity.ok("Login successful for user: " 
+                    + user.getName() + " with role: " + user.getRole());
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}

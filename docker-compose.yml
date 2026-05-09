@@ -1,0 +1,33 @@
+# Local MySQL for Transfer Credit Match (matches backend application.properties).
+#
+# Start:
+#   docker compose up -d
+#
+# Load schema + seed (after the server is ready — ~15–30s first time):
+#   docker compose cp database/setup_database.sql db:/tmp/setup.sql
+#   docker compose exec db sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" transfer_credit < /tmp/setup.sql'
+#
+# On Windows PowerShell, those two lines work as-is (single quotes keep $ for the shell inside the container).
+#
+# Stop (keeps data in volume):
+#   docker compose down
+# Stop and delete data:
+#   docker compose down -v
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: transfercreditmatch-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      # Compose treats $$ as a literal $ — password matches application.properties (Student2025$)
+      MYSQL_ROOT_PASSWORD: "Student2025$$"
+      MYSQL_DATABASE: transfer_credit
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - tcm_mysql_data:/var/lib/mysql
+
+volumes:
+  tcm_mysql_data:
