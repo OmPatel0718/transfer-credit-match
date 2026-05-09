@@ -5,79 +5,6 @@ Log of changes and progress for teammates. Intended to be committed and pushed w
 **Location:** This log lives under `frontend-react/Spring 2026 Logs/` so all frontend deliverables (code + docs) are in one place when pushing to origin.
 
 ---
-## 2026-05-07
-
-### Mobile-friendly viewport wrapper, deployment fix, and Dashboard merge
-
-**Vercel preview build fix**
-- Fixed a TypeScript compile error (`TS2552: Cannot find name 'currentProgramLabel'`) that was breaking the preview deployment on Vercel.
-- The preview repo (`lucamacie9/ru-transfer-site-preview-2026`) was on a divergent commit from `origin/dev`; resynced its `main` branch to the working frontend so the live preview rebuilds cleanly.
-
-**Mobile / viewport infrastructure**
-- New `useMediaQuery` hook (`src/hooks/useMediaQuery.ts`) wrapping `matchMedia` — fires only when a breakpoint flips rather than on every resize event, with a Safari-pre-14 listener fallback.
-- New `ViewportProvider` + `useViewport()` (`src/context/ViewportContext.tsx`) exposing `{ breakpoint, isMobile, isTablet, isDesktop, isTabletOrSmaller, isTabletOrLarger }`. Single source of truth for mobile/tablet/desktop cutoffs (default mobile < 768, desktop ≥ 1024); breakpoints can be overridden via provider props.
-- New declarative wrappers (`src/components/responsive/Responsive.tsx`): `<Mobile>`, `<Tablet>`, `<Desktop>`, `<TabletOrSmaller>`, `<TabletOrLarger>`, and `<ResponsiveSwitch mobile={...} tablet={...} desktop={...} />`.
-- `main.tsx` wraps the app in `<ViewportProvider>` so any component can deliver mobile-specific UI without each one attaching its own resize listener.
-
-**Mobile navigation**
-- Existing nav extracted into `DesktopNav.tsx` (byte-identical for desktop users — no visual change at ≥1024px).
-- New `MobileNav.tsx`: sticky top bar with brand, theme toggle, and a hamburger that opens a slide-in drawer (≤320px wide) listing every route, the logged-in identity, and Login/Register or Logout.
-  - Body-scroll lock while the drawer is open.
-  - Closes on Esc, on backdrop tap, on route change, and on the explicit ×.
-  - 44px touch targets and 16px form font sizes to satisfy iOS Safari (no auto-zoom on input focus).
-- `AppLayout.tsx` collapsed to just a `<ResponsiveSwitch>` between the two navs plus the existing `<Outlet />` and footer.
-
-**Page-level mobile tunes**
-- `LandingPage`: hero padding, banner height, and title size shrink on mobile via `useViewport` (3rem → 1.5rem padding; 180px → 120px banner; 2rem → 1.5rem title).
-- `InstitutionsPage`: existing `@media (max-width: 991.98px)` block extended with a new `@media (max-width: 600px)` rule — smaller title (44 → 36px), shorter hero (210 → 160px), centered hero text, full-width CTA, 16px form font.
-- `ProgramsPage`: hero padding cut on mobile (`70px 20px 45px` → `32px 16px 24px`); search input and select drop their `minWidth` on mobile so they fit a 360px viewport instead of overflowing.
-- `MatchPage`, `AboutPage`, `LoginPage`, `RegisterPage`, `DashboardPage` already used responsive primitives (`auto-fit minmax(...)`, `clamp()`, `flex-wrap`) and only needed the global defenses below.
-
-**Defensive global CSS (`index.css`)**
-- `overflow-x: hidden` on `html`/`body` to kill rogue horizontal scroll.
-- `max-width: 100%` on `img/video/canvas/svg` so media can't blow out the layout.
-- `word-break` and `overflow-wrap` on mobile to break long unbreakable strings such as URLs and course IDs.
-- 16px minimum font on `input`/`select`/`textarea` below 768px to prevent iOS Safari from auto-zooming when an input gains focus.
-- `-webkit-text-size-adjust: 100%` on `body`.
-
-**Backend / config posture this round**
-- No new Java/Spring code was needed for any of the above — the wrapper is a pure frontend addition and the existing `SecurityConfig`/CORS/JDBC auth from the 2026-04-15 work continues to back it.
-- Pulled `origin/dev` (Matthew Gebara's `d2718c6 "Dashboard"`) into the local branch. That commit also added a backend bootstrap class (`backend/src/main/java/com/transfercreditmatch/bootstrap/DemoDataLoader.java`) and edits to `database/setup_database.sql`, both of which now ride along on `dev`.
-
-**Dashboard merge (hybrid)**
-- `DashboardPage.tsx` had a real conflict: Matthew's tweaks were against the older stat-cards UI, while `b65a0c7` had already replaced that page with a full CRUD dashboard for the live preview. Resolved as a hybrid so neither contributor's work is lost:
-  - Base: the CRUD dashboard (Institutions / Programs / Courses / KUs / Course-KU mappings) backed by the live REST API.
-  - Layered on top: Matthew's role/stat header — dynamic `{roleLabel}` (no longer hardcoded "Director"), `View-as-Admin` / `View-as-Director` / `View-as-Student` switch with `flex-wrap: wrap`, and the four stat cards. Stat counts are now driven by the CRUD page's already-loaded `institutions` / `programs` / `courses` / `knowledgeUnits` arrays, so they're always live, and the Courses card shows `0` instead of `"Login as admin/director"` when unauthenticated.
-
-**Repo / delivery**
-- Mobile + Vercel-fix work pushed to `preview/main` (`lucamacie9/ru-transfer-site-preview-2026`) so the live preview rebuilds with mobile nav.
-- This commit pushes the same work plus the merged Dashboard hybrid back to `origin/dev` (`dr-celkin/transfercreditmatch`). Only `frontend-react/` (and the merge-pulled backend bootstrap from Matthew) is in scope for this push; no `docs-local/` or `target/` build artifacts.
-
-*— Luca M, May 7, 2026*
-
----
-## 2026-04-27
-
-### Transcript Upload 
-
-- **Transcript upload functionality** - Giselle Rodriguez
-- Created new "Upload Transcript" section styled consistently with other cards
-- File input field supports .pdf, .doc, .docx, .txt
-- Confirmation message and file name displays after upload 
-
----
-## 2026-04-26
-
-### Autocomplete Search
-
-- **AutoComplete Search implementation** - Yinka Yussuf, Darius Gillard
-- Replaced Basic dropdown course selection with dynamic autocomplete search inputs
-- Integrated reusable Autocomplete component for course search
-- Mapped API course data into searchable options
-- Implemented debounced search input
-- Added filtering logic to return matching results based on user input
-
----
 ## 2026-04-15
 
 ### Full-stack auth and API wiring (session)
@@ -96,41 +23,12 @@ Log of changes and progress for teammates. Intended to be committed and pushed w
 *— Luca M, April 15, 2026*
 
 ---
-## 2026-04-14
-
-### Light and Dark Mode
-
-- **Light and Dak Mode implementation** - Sabrina Aldakka
-- Added theme context - light/dark
-- Added toggle button in navigation
-  - switches between light and dark mode
-  - updates automatically on toggle 
-- Includes icon change - sun/moon
-- Updated light/dark mode to different shades of green
-
----
-## 2026-04-13
-
-### Role Based Access Update
-
-- **Role Based Access Routing** - Matthew Gebara
-- Only Admins can access director view dashboard, hides access from students
-- Redirects
-  - not logged in - login page
-  - not admin - home page
-- Added role switch feature
-  - can toggle between student and admin
-  - used for testing different views
-- Updated Dashboard
-  - shows current role
-  - buttons to switch role 
-
----
 ## 2026-04-06
 
 ### Dashboard Page Update 
 
-- **Dashboard Page implementation** - Matthew Gebara
+**Dashboard Page**
+- Dashboard Page implementation - Matthew Gebara
 - Added metric cards displaying totals for each section
 - Structured sections using card based layout for consistency 
 - Added input fields with add functionality for creating new entries
@@ -196,6 +94,10 @@ Log of changes and progress for teammates. Intended to be committed and pushed w
 ## 2026-03-18
 
 ### Login & Registration Pages Update + Validation
+
+Login Page Implementation - Darius Gillard
+
+Registration Page Implementation - Giselle Rodriguez
 
 **Login Page**
 - Login Page implementation - Darius Gillard

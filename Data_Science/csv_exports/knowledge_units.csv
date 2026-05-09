@@ -1,0 +1,27 @@
+ku_id,ku_name,ku_description,created_at
+1,Programming Concepts,Covers fundamental programming logic and syntax,2026-02-16 20:24:21
+2,Cybersecurity Basics,Introduction to security concepts and best practices,2026-02-16 20:24:21
+3,Networking Fundamentals,Covers basic networking principles and protocols,2026-02-16 20:24:21
+4,Database Management,Covers SQL and NoSQL database principles,2026-02-16 20:24:21
+5,Cybersecurity Foundations,Covers fundamental concepts behind cybersecurity,2026-02-16 20:24:21
+6,Cybersecurity Principles,Covers basic security design fundamentals,2026-02-16 20:24:21
+7,IT Systems Components,Covers components in an IT system and their roles in system operation,2026-02-16 20:24:21
+8,Basic Scripting and Programming,"Covers simple script/program creation, algorithm implementation, and basic security practices in scripting/programming",2026-02-16 20:24:21
+9,Basic Networking,"Covers how networks are built and operated, network analysis tools, and vulnerabilities",2026-02-16 20:24:21
+10,Network Defense,"Covers defense of networks, basic tools/techniques to protect networks, and communication assets from cyber threats",2026-02-16 20:24:21
+11,Basic Cryptography,Covers how and where cryptography is used,2026-02-16 20:24:21
+12,Operating Systems Concepts,"Covers roles of operating systems, basic functions, and services provided by operating systems",2026-02-16 20:24:21
+13,Advanced Network Technology and Protocols,"Covers advanced networking concepts in technology, security, and communication",2026-02-16 20:24:21
+14,Cloud Computing,"Covers technologies and services that enable cloud computing, types of cloud computing models, and security/legal issues with cloud computing",2026-02-16 20:24:21
+15,Cybersecurity Ethics,Covers ethics in cyber contexts,2026-02-16 20:24:21
+16,Database Management Systems,Covers skills to utilize database management systems,2026-02-16 20:24:21
+17,Databases,"Covers how database systems are used, managed, and associated issues",2026-02-16 20:24:21
+18,Digital Communications,Covers protocols and methodologies in modern digital communications systems,2026-02-16 20:24:21
+19,Intrusion Detection/Prevention Systems,Covers skills related to detecting/analyzig vulnerabilities and risk mitigation,2026-02-16 20:24:21
+20,Low Level Programming,Covers programming securely with low level programming languages,2026-02-16 20:24:21
+21,Network Security Administration,Covers maintaining comprehensive enterprise security infrastructure,2026-02-16 20:24:21
+22,Network Technology and Protocols,"Covers common network protocols, interaction between network components, and network evolution",2026-02-16 20:24:21
+23,Operating Systems Administration,Covers basic operations involved in system administration of operating systems,2026-02-16 20:24:21
+24,Operating Systems Theory,"Covers implementation of operating system concepts, components, and interfaces",2026-02-16 20:24:21
+25,Vulnerability Analysis,Covers system vulnerabilities,2026-02-16 20:24:21
+26,Web Application Security,"Covers technology, tools, and practices associated with web applications",2026-02-16 20:24:21

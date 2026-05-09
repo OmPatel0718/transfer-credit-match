@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -85,10 +83,7 @@ public class NavigationController {
     
     // GET /api/programs - List all programs
     @GetMapping("/programs")
-    public List<Program> getAllPrograms(@RequestParam(value = "institutionId", required = false) Integer institutionId) {
-        if (institutionId != null) {
-            return programRepo.findByInstitutionId(institutionId);
-        }
+    public List<Program> getAllPrograms() {
         return programRepo.findAll();
     }
     
@@ -98,11 +93,6 @@ public class NavigationController {
         Program program = programRepo.findById(id)
             .orElseThrow(() -> new RuntimeException("Program not found with ID: " + id));
         return ResponseEntity.ok(program);
-    }
-
-    @GetMapping("/programs/{id}/courses")
-    public List<Course> getProgramCourses(@PathVariable Integer id) {
-        return courseRepo.findByProgramId(id);
     }
     
     // POST /api/programs - Create a new program
@@ -137,49 +127,8 @@ public class NavigationController {
     
     // GET /api/courses - List all courses
     @GetMapping("/courses")
-    public List<Course> getAllCourses(
-        @RequestParam(value = "institutionId", required = false) Integer institutionId,
-        @RequestParam(value = "programId", required = false) Integer programId,
-        @RequestParam(value = "q", required = false) String query
-    ) {
-        List<Course> courses;
-        if (institutionId != null && programId != null) {
-            courses = courseRepo.findByInstitutionIdAndProgramId(institutionId, programId);
-        } else if (institutionId != null) {
-            courses = courseRepo.findByInstitutionId(institutionId);
-        } else if (programId != null) {
-            courses = courseRepo.findByProgramId(programId);
-        } else {
-            courses = courseRepo.findAll();
-        }
-
-        if (query == null || query.trim().isEmpty()) {
-            return courses;
-        }
-
-        String normalizedQuery = query.trim().toLowerCase();
-        return courses.stream()
-            .filter(course -> {
-                String courseName = course.getCourseName() == null ? "" : course.getCourseName().toLowerCase();
-                String courseCode = course.getCourseCode() == null ? "" : course.getCourseCode().toLowerCase();
-                return courseName.contains(normalizedQuery) || courseCode.contains(normalizedQuery);
-            })
-            .collect(Collectors.toList());
-    }
-
-    // GET /api/courses/{id} - Get a specific course
-    @GetMapping("/courses/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Integer id) {
-        Course course = courseRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Course not found with ID: " + id));
-        return ResponseEntity.ok(course);
-    }
-
-    // POST /api/courses - Create a new course
-    @PostMapping("/courses")
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-        Course saved = courseRepo.save(course);
-        return ResponseEntity.ok(saved);
+    public List<Course> getAllCourses() {
+        return courseRepo.findAll();
     }
     
     // PUT /api/courses/{id}/skill - Update the skill earned for a course
@@ -193,29 +142,6 @@ public class NavigationController {
         Course updated = courseRepo.save(course);
         return ResponseEntity.ok(updated);
     }
-
-    // PUT /api/courses/{id} - Update a course
-    @PutMapping("/courses/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Integer id,
-                                               @RequestBody Course updatedData) {
-        Course existing = courseRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Course not found with ID: " + id));
-        existing.setSkillEarned(updatedData.getSkillEarned());
-        existing.setInstitutionId(updatedData.getInstitutionId());
-        existing.setProgramId(updatedData.getProgramId());
-        existing.setCourseName(updatedData.getCourseName());
-        existing.setCourseCode(updatedData.getCourseCode());
-        existing.setCredits(updatedData.getCredits());
-        Course saved = courseRepo.save(existing);
-        return ResponseEntity.ok(saved);
-    }
-
-    // DELETE /api/courses/{id} - Delete a course
-    @DeleteMapping("/courses/{id}")
-    public ResponseEntity<String> deleteCourse(@PathVariable Integer id) {
-        courseRepo.deleteById(id);
-        return ResponseEntity.ok("Course with ID " + id + " has been deleted.");
-    }
     
     // --------------------------
     // KNOWLEDGE UNITS ENDPOINTS (GET ONLY)
@@ -225,41 +151,5 @@ public class NavigationController {
     @GetMapping("/knowledge_units")
     public List<KnowledgeUnit> getAllKnowledgeUnits() {
         return kuRepo.findAll();
-    }
-
-    // POST /api/knowledge_units - Create a knowledge unit
-    @PostMapping("/knowledge_units")
-    public ResponseEntity<KnowledgeUnit> createKnowledgeUnit(@RequestBody KnowledgeUnit knowledgeUnit) {
-        KnowledgeUnit saved = kuRepo.save(knowledgeUnit);
-        return ResponseEntity.ok(saved);
-    }
-
-    // PUT /api/knowledge_units/{id} - Update a knowledge unit
-    @PutMapping("/knowledge_units/{id}")
-    public ResponseEntity<KnowledgeUnit> updateKnowledgeUnit(@PathVariable Integer id,
-                                                             @RequestBody KnowledgeUnit updatedData) {
-        KnowledgeUnit existing = kuRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Knowledge unit not found with ID: " + id));
-        existing.setKuName(updatedData.getKuName());
-        existing.setKuDescription(updatedData.getKuDescription());
-        KnowledgeUnit saved = kuRepo.save(existing);
-        return ResponseEntity.ok(saved);
-    }
-
-    // DELETE /api/knowledge_units/{id} - Delete a knowledge unit
-    @DeleteMapping("/knowledge_units/{id}")
-    public ResponseEntity<String> deleteKnowledgeUnit(@PathVariable Integer id) {
-        kuRepo.deleteById(id);
-        return ResponseEntity.ok("Knowledge unit with ID " + id + " has been deleted.");
-    }
-
-    @GetMapping("/summary")
-    public Map<String, Long> getSummaryCounts() {
-        Map<String, Long> counts = new LinkedHashMap<>();
-        counts.put("institutions", institutionRepo.count());
-        counts.put("programs", programRepo.count());
-        counts.put("courses", courseRepo.count());
-        counts.put("knowledgeUnits", kuRepo.count());
-        return counts;
     }
 }

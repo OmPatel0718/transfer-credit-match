@@ -54,38 +54,11 @@ export async function postJson(path: string, body: unknown, init?: RequestInit):
   })
 }
 
-export async function postJsonData<T>(path: string, body: unknown, init?: RequestInit): Promise<T> {
-  const res = await postJson(path, body, init)
-  const text = await readErrorBody(res)
-  if (!res.ok) throw new ApiError(res.status, text)
-  if (!text) return undefined as T
-  return JSON.parse(text) as T
-}
-
 export async function postJsonText(path: string, body: unknown, init?: RequestInit): Promise<string> {
   const res = await postJson(path, body, init)
   const text = await readErrorBody(res)
   if (!res.ok) throw new ApiError(res.status, text)
   return text
-}
-
-export async function putJsonData<T>(path: string, body: unknown, init?: RequestInit): Promise<T> {
-  const headers = new Headers(init?.headers)
-  headers.set('Content-Type', 'application/json')
-  const res = await apiFetch(path, {
-    ...init,
-    method: 'PUT',
-    headers,
-    body: JSON.stringify(body),
-  })
-  const text = await readErrorBody(res)
-  if (!res.ok) throw new ApiError(res.status, text)
-  if (!text) return undefined as T
-  return JSON.parse(text) as T
-}
-
-export async function deleteRequest(path: string, init?: RequestInit): Promise<Response> {
-  return apiFetch(path, { ...init, method: 'DELETE' })
 }
 
 /** Parse role from "Login successful for user: Name with role: student" */

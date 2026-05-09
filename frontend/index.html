@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Credit</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Header Background */
+        .header {
+            position: relative;
+            height: 300px;
+            background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fafter-university-life&psig=AOvVaw0XHz5dJ3uhtzyhHadRbL-t&ust=1745076463920000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKCS8Mfy4YwDFQAAAAAdAAAAABAJ') no-repeat center center/cover;
+            height: 300px; /* Adjust height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+            color: #F7F9FF
+;
+        }
+        .header::after {
+            content: "Transfer Credit"; /* Adding title text */
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Exact center alignment */
+            color: white; /* White text color */
+            font-family: 'Merriweather', serif; /* Merriweather font */
+            font-size: 64px;
+            font-weight: 700; /* Bold */
+            z-index: 1; /* Layer it above the background image */
+            text-align: center;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        /* Overlay to make text readable */
+        .header-overlay {
+            background: rgba(23, 133, 129, 1); /* Dark overlay for contrast */
+            width: 100%; /* Reduce width */
+            height: 70%; /* Reduce height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-overlay img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Reduce width */
+            height: 100%; /* Reduce height */
+            object-fit: cover; /* Ensures it covers the container like a background */
+            z-index: 1;
+        }
+        .navbar {
+            background-color: black;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            font-family: Georgia, serif; font-size: 15px;
+            margin-left: 10px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .navbar a:hover {
+            color: #ccc;
+        }
+        .header-content h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+        }
+        /* College Card Styling */
+        .college-card {
+            background-color: #F7F9FF
+;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+        }
+        .college-card:hover {
+            transform: translateY(-5px);
+        }
+        .college-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .college-card img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="auth.html">Program Director View</a>
+            <a href="auth.html">Student View</a>
+            <a href="auth.hmtl">Admin View</a>
+            <a href="auth.html">Sign in</a>
+        </div>
+        <!-- Header -->
+        <div class="header">
+            <div class="header-overlay">
+                <div>
+                    <img src="https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/055/Uni_students_-_Main.png" alt="Description" width: 100%; /* Reduce width */
+                    height: 100%; /* Reduce height */>
+                    <h1 style="text-align: center; color: white; font-family: 'Merriweather', serif; font-size: 64px; font-weight: 700;">
+                        Transfer Credit
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <!-- Info Text -->
+        <div class="container text-center mt-4">
+            <h3 style="font-family: Georgia, serif; font-size: 23px;">
+            See what classes can transfer to Roosevelt University from your college.</h3>
+            <h1 class="display-4">Find the Best Credit Transfers</h1>
+                <p class="lead">Easily match courses between institutions and get the credit you deserve.</p>
+        </div>
+        <!-- College Cards -->
+        <div class="container mt-5">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="college-card">
+                        <img src="https://media.licdn.com/dms/image/v2/D5610AQE5omuSIOfXJQ/image-shrink_800/image-shrink_800/0/1727201705165?e=2147483647&v=beta&t=6Q1W2xczjsIb4YgymRADWtuNQAd1zFMtjbOdf6Rncvo" alt="Roosevelt University">
+                        <h5 class="mt-3">Roosevelt University</h5>
+                        <a href="#"style="color: #178581
+; class="text-primary">School Info</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="college-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Harold_Washington_College_2012.jpg" alt="Harold Washington College">
+                        <h5 class="mt-3">Harold Washington College</h5>
+                        <a href="#"style="color: #178581
+; class="text-primary">School Info</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="college-card">
+                        <img src="https://www.sasaki.com/wp-content/uploads/2019/10/160923_EarlyAMExteriors_315v2_large-1000x667.jpg" alt="Community College #2">
+                        <h5 class="mt-3">Community College #2</h5>
+                        <a href="#"style="color: #178581
+; class="text-primary">School Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="my-5"></div>
+    <footer class="bg-success bg-gradient text-white text-center py-0.5">
+        <p>© 2025 Transfer Credit Match. All Rights Reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

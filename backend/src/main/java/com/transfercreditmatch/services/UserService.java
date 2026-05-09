@@ -26,11 +26,6 @@ public class UserService {
             .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
-    }
-
     // Create a user (only if needed; otherwise rely on Auth register)
     public User createUser(User newUser) {
         // Possibly set a default role, or hash the password, etc.

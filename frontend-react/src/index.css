@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #d3bdbd;
+  --bg-color: #bdd3c3;
   --text-color: #1b3a22;
 
   --nav-bg: #06582b;
@@ -8,66 +8,27 @@
   --link-color: #ffffff;
 }
 
-/* 🌙 DARK MODE VARIABLES */
 [data-theme="dark"] {
-  --bg-color: #0f2416;  /* deep forest base */
+  --bg-color: #2d4020d7;
   --text-color: #e6f2ea;
 
-  --nav-bg: #14331c;
-  --footer-bg: #14331c;
+  --nav-bg: #173905d7;
+  --footer-bg: #173905d7;
 
   --accent: #2e7d32;
 
-  --link-color: #cfead6;
+  --link-color: #bfe6c8;
 }
 
-/* 🌿 GLOBAL BACKGROUND */
 body {
-  margin: 0;
-  min-height: 100vh;
-  color: #1b3a22;
-  transition: all 0.3s ease;
-  -webkit-text-size-adjust: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Mobile-friendly defaults: prevent horizontal overflow from oversized media or long words */
-html, body {
-  overflow-x: hidden;
-}
-img, video, canvas, svg {
-  max-width: 100%;
-  height: auto;
-}
-@media (max-width: 767px) {
-  body {
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
-  /* Prevent iOS Safari from auto-zooming when focusing inputs (<16px font triggers zoom) */
-  input, select, textarea {
-    font-size: 16px;
-  }
-}
-
-/* LIGHT MODE BACKGROUND */
-html[data-theme="light"] body,
-body:not([data-theme="dark"]) {
-  background: radial-gradient(
-    circle at bottom left,
-    rgba(3, 203, 76, 0.22) 0%,
-    rgba(20, 211, 84, 0.915) 35%,
-    #ffffff 80%
-  );
-}
-
-/* DARK MODE BACKGROUND */
-html[data-theme="dark"] body {
-  background: radial-gradient(
-    circle at bottom left,
-    rgb(16, 50, 17) 0%,
-    rgba(1, 55, 0, 0.55) 35%,
-    rgba(19, 64, 19, 0.98) 85%
-  );
-
-  color: #03551e;
+body,
+nav,
+footer,
+button {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

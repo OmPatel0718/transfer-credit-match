@@ -1,33 +1,22 @@
 package com.transfercreditmatch.controllers;
 
-import com.transfercreditmatch.dto.CourseKuRequest;
-import com.transfercreditmatch.dto.CourseKuResponse;
-import com.transfercreditmatch.dto.ErroredCourseResponse;
-import com.transfercreditmatch.dto.MatchCoverageResponse;
 import com.transfercreditmatch.dto.MatchRequest;
-import com.transfercreditmatch.dto.MatchSummaryItem;
-import com.transfercreditmatch.dto.MissingCoursesPercentResponse;
-import com.transfercreditmatch.entities.CourseKu;
-import com.transfercreditmatch.entities.KnowledgeUnit;
-import com.transfercreditmatch.repositories.KnowledgeUnitRepository;
 import com.transfercreditmatch.services.CourseMatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//TODO these imports can be removed after the 4 endpoints at the bottom are completed, these are here to return JSON looking responses for testing
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/match")
 public class MatchController {
 
     private final CourseMatchService courseMatchService;
-    private final KnowledgeUnitRepository knowledgeUnitRepository;
 
-    public MatchController(CourseMatchService courseMatchService,
-                           KnowledgeUnitRepository knowledgeUnitRepository) {
+    public MatchController(CourseMatchService courseMatchService) {
         this.courseMatchService = courseMatchService;
-        this.knowledgeUnitRepository = knowledgeUnitRepository;
     }
 
     /**
@@ -42,80 +31,57 @@ public class MatchController {
      * @return a response with the match coverage percentage
      */
     @PostMapping
-    public ResponseEntity<?> matchCourses(@RequestBody MatchRequest request) {
-        try {
-            MatchCoverageResponse response = courseMatchService.buildCoverageResponse(
-                request.getCourseIdFrom(),
-                request.getCourseIdTo()
-            );
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<String> matchCourses(@RequestBody MatchRequest request) {
+        double coverage = courseMatchService.calculateMatchCoverage(
+                request.getCourseIdFrom(), request.getCourseIdTo());
+        String resultMessage = "Match Coverage: " + (coverage * 100) + "%";
+        return ResponseEntity.ok(resultMessage);
     }
     
     // GET /api/match/fully-matched - Courses with 100% KU match
     @GetMapping("/fully-matched")
-    public ResponseEntity<List<MatchSummaryItem>> getFullyMatchedCourses() {
-        return ResponseEntity.ok(courseMatchService.getFullyMatchedCourses());
+    public ResponseEntity<List<Map<String, Object>>> getFullyMatchedCourses() {
+        // TODO: Replace with actual database logic
+        List<Map<String, Object>> exampleData = List.of(
+            Map.of("courseId", 1, "courseName", "Intro to Programming", "matchPercent", 100),
+            Map.of("courseId", 3, "courseName", "Data Structures", "matchPercent", 100)
+        );
+        return ResponseEntity.ok(exampleData);
     }
 
     // GET /api/match/missing-courses - Courses still needed to graduate
     @GetMapping("/missing-courses")
-    public ResponseEntity<List<MatchSummaryItem>> getMissingCourses() {
-        return ResponseEntity.ok(courseMatchService.getMissingCourses());
+    public ResponseEntity<List<Map<String, Object>>> getMissingCourses() {
+        // TODO: Replace with actual database logic
+        List<Map<String, Object>> exampleData = List.of(
+            Map.of("courseId", 5, "courseName", "Operating Systems", "required", true),
+            Map.of("courseId", 7, "courseName", "Computer Networks", "required", true)
+        );
+        return ResponseEntity.ok(exampleData);
     }
 
     // GET /api/match/missing-courses-percent - Percent of courses needed for graduation
     @GetMapping("/missing-courses-percent")
-    public ResponseEntity<MissingCoursesPercentResponse> getMissingCoursesPercent() {
-        return ResponseEntity.ok(courseMatchService.getMissingCoursesPercent());
+    public ResponseEntity<Map<String, Object>> getMissingCoursesPercent() {
+        // TODO: Replace with actual database logic
+        Map<String, Object> exampleData = Map.of(
+            "percentMissing", 35.0,
+            "totalCourses", 20,
+            "completedCourses", 13,
+            "missingCourses", 7
+        );
+        return ResponseEntity.ok(exampleData);
     }
 
     // GET /api/match/errored-courses - Courses that failed to import or weren't found
     @GetMapping("/errored-courses")
-    public ResponseEntity<List<ErroredCourseResponse>> getErroredCourses() {
-        return ResponseEntity.ok(courseMatchService.getErroredCourses());
-    }
-
-    @GetMapping("/course-ku")
-    public ResponseEntity<List<CourseKuResponse>> getCourseKuMappings(@RequestParam Integer courseId) {
-        List<CourseKu> mappings = courseMatchService.getCourseKuMappings(courseId);
-        List<Integer> kuIds = mappings.stream().map(CourseKu::getKuId).collect(Collectors.toList());
-        List<KnowledgeUnit> kus = knowledgeUnitRepository.findAllById(kuIds);
-        return ResponseEntity.ok(mappings.stream().map(mapping -> {
-            CourseKuResponse item = new CourseKuResponse();
-            item.setCourseId(mapping.getCourseId());
-            item.setKuId(mapping.getKuId());
-            KnowledgeUnit ku = kus.stream()
-                .filter(unit -> unit.getKuId().equals(mapping.getKuId()))
-                .findFirst()
-                .orElse(null);
-            if (ku != null) {
-                item.setKuName(ku.getKuName());
-                item.setKuDescription(ku.getKuDescription());
-            }
-            return item;
-        }).collect(Collectors.toList()));
-    }
-
-    @PostMapping("/course-ku")
-    public ResponseEntity<CourseKuResponse> addCourseKuMapping(@RequestBody CourseKuRequest request) {
-        CourseKu mapping = courseMatchService.addCourseKuMapping(request.getCourseId(), request.getKuId());
-        KnowledgeUnit ku = knowledgeUnitRepository.findById(mapping.getKuId())
-            .orElseThrow(() -> new RuntimeException("Knowledge unit not found with ID: " + mapping.getKuId()));
-        CourseKuResponse response = new CourseKuResponse();
-        response.setCourseId(mapping.getCourseId());
-        response.setKuId(mapping.getKuId());
-        response.setKuName(ku.getKuName());
-        response.setKuDescription(ku.getKuDescription());
-        return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping("/course-ku")
-    public ResponseEntity<String> removeCourseKuMapping(@RequestParam Integer courseId, @RequestParam Integer kuId) {
-        courseMatchService.removeCourseKuMapping(courseId, kuId);
-        return ResponseEntity.ok("Removed KU " + kuId + " from course " + courseId + ".");
+    public ResponseEntity<List<Map<String, Object>>> getErroredCourses() {
+        // TODO: Replace with actual database logic
+        List<Map<String, Object>> exampleData = List.of(
+            Map.of("courseName", "Advanced Algorithms", "error", "Course not found in database"),
+            Map.of("courseName", "Senior Capstone", "error", "Failed to import — missing credits field")
+        );
+        return ResponseEntity.ok(exampleData);
     }
 
 }

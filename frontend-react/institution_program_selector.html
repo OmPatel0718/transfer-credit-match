@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,334 +6,145 @@
   <title>Institution & Program Selection - Transfer Credit Match</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
-    :root{
-      --mm-bg: #f3fbf4;
-      --mm-surface: #ffffff;
-      --mm-text: #0f172a;
-      --mm-muted: rgba(15, 23, 42, 0.7);
-      --mm-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
-      --mm-green: #9ad28a;
-      --mm-pill: rgba(15, 23, 42, 0.06);
-    }
-
     body {
-      background:
-        radial-gradient(1200px 500px at 20% 0%, rgba(154, 210, 138, 0.30), transparent 60%),
-        radial-gradient(900px 420px at 90% 20%, rgba(154, 210, 138, 0.22), transparent 60%),
-        linear-gradient(180deg, #ffffff 0%, var(--mm-bg) 45%, rgba(154, 210, 138, 0.25) 100%);
-      color: var(--mm-text);
-      padding-top: 0;
+      background: #F8F9FA;
+      padding-top: 60px;
     }
-
-    /* Top bar */
-    .mm-topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    .director-header-overlay {
+      width: 100%;
+      height: 100%;
+      z-index: 0;
     }
-    .mm-brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-decoration:none;
-      color:inherit;
-    }
-    .mm-brand img{
-      height: 34px;
-      width: auto;
-      display:block;
-    }
-    .mm-nav{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-    .mm-nav a{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.35);
-      color: rgba(15, 23, 42, 0.85);
-      text-decoration:none;
-      font-size: 14px;
-      background: #fff;
-      transition: background .15s ease, color .15s ease, border-color .15s ease;
-      white-space:nowrap;
-    }
-    .mm-nav a:hover{
-      background: var(--mm-pill);
-    }
-    .mm-nav a.active{
-      background: #0b0f14;
-      border-color: #0b0f14;
-      color: #fff;
-    }
-
-    /* Hero */
-    .mm-title{
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      font-size: clamp(44px, 5vw, 74px);
-      margin: 26px 0 14px 0;
-    }
-    .mm-hero{
+    .director-header {
       position: relative;
-      height: 240px;
-      border-radius: 16px;
-      overflow:hidden;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.70) 100%),
-        url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=2400&q=70') center/cover no-repeat;
-      box-shadow: var(--mm-shadow);
+      height: 300px;
+      background: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/055/Uni_students_-_Main.png') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      color: white;
     }
-    .mm-hero-content{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      padding: 20px 24px;
-      color:#fff;
-      text-align:right;
-    }
-    .mm-hero h2{
-      margin:0;
-      font-weight:900;
-      letter-spacing:-0.02em;
-      font-size: clamp(34px, 4vw, 58px);
-    }
-    .mm-hero p{
-      margin: 10px 0 0 0;
-      max-width: 520px;
-      color: rgba(255,255,255,0.88);
-      line-height: 1.35;
-      font-size: 14px;
-    }
-
-    /* Form area */
-    .mm-card{
-      background: var(--mm-surface);
-      border: 2px solid rgba(15, 23, 42, 0.35);
-      border-radius: 18px;
-      padding: 22px 22px 18px 22px;
-      box-shadow: var(--mm-shadow);
-    }
-    .mm-card h5{
-      font-size: 16px;
-      margin-bottom: 10px;
-      color: rgba(15, 23, 42, 0.82);
+    .director-header::after {
+      content: "Select Institution & Program";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Merriweather', serif;
+      font-size: 48px;
       font-weight: 700;
+      z-index: 1;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
-    .mm-card .form-control,
-    .mm-card .form-select{
+    .selection-card {
+      background-color: #ffffff;
       border-radius: 10px;
-      border-color: rgba(15, 23, 42, 0.30);
-    }
-    .mm-arrow{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 34px;
-      color: rgba(15, 23, 42, 0.75);
-      user-select:none;
-    }
-
-    .mm-cta{
-      border: 0;
-      background: var(--mm-green);
-      color: #0b0f14;
-      border-radius: 999px;
-      padding: 10px 20px;
-      font-weight: 700;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.10);
-    }
-    .mm-cta:disabled{
-      opacity: 0.55;
-      box-shadow:none;
-    }
-
-    footer{
-      color: rgba(15, 23, 42, 0.65);
-      font-size: 12px;
-      padding: 18px 0 26px 0;
-    }
-
-    @media (max-width: 991.98px){
-      .mm-arrow{ display:none; }
-      .mm-hero{ height: 210px; }
-    }
-    .visually-hidden-select {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
+      padding: 24px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
     }
   </style>
 </head>
 <body>
-  <header class="mm-topbar">
-    <div class="container py-2 d-flex align-items-center justify-content-between gap-3">
-      <a class="mm-brand" href="index.html" aria-label="Roosevelt University">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Roosevelt_University_Logo.svg"
-          alt="Roosevelt University"
-          loading="eager"
-          decoding="async"
-        >
-      </a>
-
-      <nav class="mm-nav" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="match.html">Match</a>
-        <a href="director_view.html">Director View</a>
-        <a class="active" href="institution_program_selector.html" aria-current="page">Institutions</a>
-        <a href="auth.html">Login</a>
-      </nav>
+  <!-- Navbar (aligned with other pages) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Transfer Credit Match</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="auth.html">Login</a></li>
+        </ul>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <main class="container">
-    <h1 class="mm-title">FIND YOUR</h1>
+  <!-- Header banner -->
+  <div class="director-header">
+    <div class="director-header-overlay"></div>
+  </div>
 
-    <section class="mm-hero" aria-label="Transfer path hero">
-      <div class="mm-hero-content">
-        <div>
-          <h2>TRANSFER PATH</h2>
-          <p>
-            Choose your current institution, your target institution, and the target program you want to transfer into.
-          </p>
+  <!-- Selection component -->
+  <div class="container my-5">
+    <div class="selection-card">
+      <h3 class="mb-3">Plan Your Transfer Path</h3>
+      <p class="text-muted mb-4">
+        Choose your <strong>current institution</strong>, your <strong>target institution</strong>, and the
+        <strong>target program</strong> you want to transfer into.
+      </p>
+
+      <!-- Institutions row -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <h5>Current Institution</h5>
+          <label for="currentInstitutionSelect" class="form-label">Current Institution</label>
+          <select id="currentInstitutionSelect" class="form-select">
+            <option value="">Loading institutions...</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <h5>Target Institution</h5>
+          <label for="targetInstitutionSelect" class="form-label">Target Institution</label>
+          <select id="targetInstitutionSelect" class="form-select" disabled>
+            <option value="">Select Institution</option>
+            <option value="__default_roosevelt__" selected>Roosevelt University</option>
+            <option value="" disabled>Loading institutions...</option>
+          </select>
         </div>
       </div>
-    </section>
 
-    <section class="mt-4 mb-4">
-      <div class="row align-items-stretch g-4">
-        <div class="col-lg-5">
-          <div class="mm-card h-100">
-            <h5>Current Institution</h5>
-            <label for="currentInstitutionAutocomplete" class="form-label visually-hidden">Type to search + select</label>
-            <input id="currentInstitutionAutocomplete" class="form-control mb-3" type="text" placeholder=" " autocomplete="off" list="currentInstitutionDatalist">
-            <datalist id="currentInstitutionDatalist"></datalist>
-            <label for="currentInstitutionSelect" class="form-label visually-hidden">Current Institution</label>
-            <select id="currentInstitutionSelect" class="form-select visually-hidden-select" aria-hidden="true" tabindex="-1">
-              <option value="">Loading institutions...</option>
-            </select>
-
-            <h5 class="mt-2">Current Program</h5>
-            <input class="form-control" type="text" placeholder=" " disabled>
-          </div>
-        </div>
-
-        <div class="col-lg-2">
-          <div class="mm-arrow h-100">→</div>
-        </div>
-
-        <div class="col-lg-5">
-          <div class="mm-card h-100">
-            <h5>Target Institution</h5>
-            <label for="targetInstitutionSelect" class="form-label visually-hidden">Target Institution</label>
-            <select id="targetInstitutionSelect" class="form-select mb-3">
-              <option value="">Select Institution</option>
-              <option value="__default_roosevelt__" selected>Roosevelt University</option>
-              <option value="" disabled>Loading institutions...</option>
-            </select>
-
-            <h5>Target Program</h5>
-            <label for="targetProgramAutocomplete" class="form-label visually-hidden">Type to search + select</label>
-            <input id="targetProgramAutocomplete" class="form-control mb-3" type="text" placeholder=" " autocomplete="off" list="targetProgramDatalist" disabled>
-            <datalist id="targetProgramDatalist"></datalist>
-            <label for="targetProgramSelect" class="form-label visually-hidden">Program at Target Institution</label>
-            <select id="targetProgramSelect" class="form-select visually-hidden-select" aria-hidden="true" tabindex="-1" disabled>
-              <option value="">Select a target institution first</option>
-            </select>
-
-            <div class="mt-2 d-flex align-items-center justify-content-between gap-3 flex-wrap">
-              <button id="confirmSelectionBtn" class="mm-cta" disabled>Confirm Transfer Goal</button>
-              <div id="selectionSummary" class="small" style="color: var(--mm-muted);"></div>
-            </div>
-          </div>
+      <!-- Target program row (depends on target institution) -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <h5>Target Program</h5>
+          <label for="targetProgramSelect" class="form-label">Program at Target Institution</label>
+          <select id="targetProgramSelect" class="form-select" disabled>
+            <option value="">Select a target institution first</option>
+          </select>
         </div>
       </div>
-    </section>
 
-    <footer class="text-center">
-      <div>© 2026 Transfer Credit Match. All rights reserved.</div>
-    </footer>
-  </main>
+      <!-- Summary / confirmation -->
+      <div class="mt-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <button id="confirmSelectionBtn" class="btn btn-primary" disabled>
+          Confirm Transfer Goal
+        </button>
+        <div id="selectionSummary" class="text-muted small"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-success bg-gradient text-white text-center py-0.5">
+    <p>© 2025 Transfer Credit Match. All Rights Reserved.</p>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="roosevelt_programs.js"></script>
   <script>
     // Simple reusable initializer so this logic can be copy-pasted into other pages if needed.
     function initInstitutionProgramSelector(options) {
       const {
         currentInstitutionSelectId = 'currentInstitutionSelect',
-        currentInstitutionAutocompleteId = 'currentInstitutionAutocomplete',
-        currentInstitutionDatalistId = 'currentInstitutionDatalist',
         targetInstitutionSelectId = 'targetInstitutionSelect',
         targetProgramSelectId = 'targetProgramSelect',
-        targetProgramAutocompleteId = 'targetProgramAutocomplete',
-        targetProgramDatalistId = 'targetProgramDatalist',
         confirmButtonId = 'confirmSelectionBtn',
-        summaryElementId = 'selectionSummary'
+        summaryElementId = 'selectionSummary',
+        baseApiUrl = 'http://localhost:8080/api'
       } = options || {};
 
       const currentInstitutionSelect = document.getElementById(currentInstitutionSelectId);
-      const currentInstitutionAutocomplete = document.getElementById(currentInstitutionAutocompleteId);
-      const currentInstitutionDatalist = document.getElementById(currentInstitutionDatalistId);
       const targetInstitutionSelect = document.getElementById(targetInstitutionSelectId);
       const targetProgramSelect = document.getElementById(targetProgramSelectId);
-      const targetProgramAutocomplete = document.getElementById(targetProgramAutocompleteId);
-      const targetProgramDatalist = document.getElementById(targetProgramDatalistId);
       const confirmBtn = document.getElementById(confirmButtonId);
       const summaryEl = document.getElementById(summaryElementId);
 
-      const TARGET_INST_VALUE = '__roosevelt__';
-      const TARGET_INST_LABEL = 'Roosevelt University';
-
-      const CURRENT_INSTITUTION_STRUCTURE = [
-        {
-          optgroup: 'City Colleges of Chicago',
-          options: [
-            { value: 'ccc-truman', label: 'Truman College' },
-            { value: 'ccc-harold-washington', label: 'Harold Washington College' },
-            { value: 'ccc-wilbur-wright', label: 'Wilbur Wright College' },
-            { value: 'ccc-olive-harvey', label: 'Olive-Harvey College' },
-            { value: 'ccc-kennedy-king', label: 'Kennedy-King College' }
-          ]
-        },
-        { value: 'other-community-college', label: 'Other Community College' },
-        { value: 'other-university', label: 'Other University' }
-      ];
-
-      function currentInstitutionLabel(value) {
-        for (let i = 0; i < CURRENT_INSTITUTION_STRUCTURE.length; i++) {
-          const entry = CURRENT_INSTITUTION_STRUCTURE[i];
-          if (entry.optgroup) {
-            for (let j = 0; j < entry.options.length; j++) {
-              if (entry.options[j].value === value) {
-                return entry.optgroup + ' — ' + entry.options[j].label;
-              }
-            }
-          } else if (entry.value === value) {
-            return entry.label;
-          }
-        }
-        return value;
-      }
+      let allPrograms = [];
+      let institutionsById = {};
+      const defaultTargetInstitutionName = 'Roosevelt University';
 
       function setSummary(text, isError) {
         if (!summaryEl) return;
@@ -341,217 +152,136 @@
         summaryEl.classList.toggle('text-danger', !!isError);
       }
 
-      function populateCurrentInstitutions() {
-        currentInstitutionSelect.innerHTML = '';
-        const placeholder = document.createElement('option');
-        placeholder.value = '';
-        placeholder.textContent = 'Select your current institution';
-        currentInstitutionSelect.appendChild(placeholder);
+      function populateInstitutions(institutions) {
+        institutionsById = {};
+        const baseOption = '<option value="">Select Institution</option>';
 
-        CURRENT_INSTITUTION_STRUCTURE.forEach(function (entry) {
-          if (entry.optgroup) {
-            const og = document.createElement('optgroup');
-            og.label = entry.optgroup;
-            entry.options.forEach(function (opt) {
-              const o = document.createElement('option');
-              o.value = opt.value;
-              o.textContent = opt.label;
-              og.appendChild(o);
-            });
-            currentInstitutionSelect.appendChild(og);
-          } else {
-            const o = document.createElement('option');
-            o.value = entry.value;
-            o.textContent = entry.label;
-            currentInstitutionSelect.appendChild(o);
+        currentInstitutionSelect.innerHTML = baseOption;
+        targetInstitutionSelect.innerHTML = baseOption;
+
+        let defaultTargetInstitutionId = null;
+
+        institutions.forEach(inst => {
+          institutionsById[String(inst.institutionId)] = inst;
+          const opt = document.createElement('option');
+          opt.value = inst.institutionId;
+          opt.textContent = inst.name + (inst.location ? ' (' + inst.location + ')' : '');
+          currentInstitutionSelect.appendChild(opt.cloneNode(true));
+          targetInstitutionSelect.appendChild(opt);
+
+          if (
+            !defaultTargetInstitutionId &&
+            typeof inst.name === 'string' &&
+            inst.name.toLowerCase() === defaultTargetInstitutionName.toLowerCase()
+          ) {
+            defaultTargetInstitutionId = String(inst.institutionId);
           }
         });
-      }
 
-      function populateRooseveltPrograms() {
-        const programs = window.ROOSEVELT_PROGRAMS || [];
-        targetProgramSelect.innerHTML = '';
-        const ph = document.createElement('option');
-        ph.value = '';
-        ph.textContent = programs.length ? 'Select a program' : 'Program list unavailable';
-        targetProgramSelect.appendChild(ph);
-
-        programs.forEach(function (name, index) {
-          const o = document.createElement('option');
-          o.value = 'p-' + index;
-          o.textContent = name;
-          targetProgramSelect.appendChild(o);
-        });
-
-        targetProgramSelect.disabled = programs.length === 0;
-        if (targetProgramAutocomplete) {
-          targetProgramAutocomplete.disabled = programs.length === 0;
-          if (programs.length === 0) targetProgramAutocomplete.value = '';
+        // If Roosevelt University exists, set it as the default target institution
+        if (defaultTargetInstitutionId) {
+          targetInstitutionSelect.value = defaultTargetInstitutionId;
+          const changeEvent = new Event('change');
+          targetInstitutionSelect.dispatchEvent(changeEvent);
         }
-        updateConfirmEnabled();
       }
 
-      function selectedProgramName() {
-        const programs = window.ROOSEVELT_PROGRAMS || [];
-        const v = targetProgramSelect.value;
-        if (!v || v.indexOf('p-') !== 0) return '';
-        const idx = parseInt(v.slice(2), 10);
-        return programs[idx] || '';
-      }
-
-      function updateConfirmEnabled() {
-        const ok =
-          !!currentInstitutionSelect.value &&
-          targetInstitutionSelect.value === TARGET_INST_VALUE &&
-          !!targetProgramSelect.value;
-        confirmBtn.disabled = !ok;
-      }
-
-      populateCurrentInstitutions();
-      targetInstitutionSelect.innerHTML = '';
-      const tOpt = document.createElement('option');
-      tOpt.value = TARGET_INST_VALUE;
-      tOpt.textContent = TARGET_INST_LABEL;
-      tOpt.selected = true;
-      targetInstitutionSelect.appendChild(tOpt);
-      targetInstitutionSelect.disabled = true;
-
-      populateRooseveltPrograms();
-      setSummary('Select your current institution and your target program at Roosevelt University.');
-
-      currentInstitutionSelect.addEventListener('change', updateConfirmEnabled);
-      targetProgramSelect.addEventListener('change', updateConfirmEnabled);
-
-      function normalizeForSearch(s) {
-        return String(s || '')
-          .toLowerCase()
-          .normalize('NFKD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .trim();
-      }
-
-      function buildDatalistFromSelect(selectEl, datalistEl, displayForOption) {
-        if (!selectEl || !datalistEl) return [];
-        const items = [];
-        datalistEl.innerHTML = '';
-        Array.from(selectEl.querySelectorAll('option')).forEach(function (opt) {
-          if (!opt.value) return; // skip placeholder
-          const display = displayForOption ? displayForOption(opt) : opt.textContent;
-          items.push({ value: opt.value, display: display });
-          const dlOpt = document.createElement('option');
-          dlOpt.value = display;
-          datalistEl.appendChild(dlOpt);
-        });
-        return items;
-      }
-
-      function attachAutocompleteBehavior(inputEl, selectEl, datalistEl, getItems, onValidSelectionDisplay) {
-        if (!inputEl || !selectEl || !datalistEl) return;
-
-        function tryResolveSelection() {
-          const raw = inputEl.value;
-          const q = normalizeForSearch(raw);
-          if (!q) {
-            selectEl.value = '';
-            updateConfirmEnabled();
-            return;
-          }
-
-          const items = (typeof getItems === 'function' ? getItems() : []) || [];
-
-          // Prefer exact (normalized) match, otherwise first "starts with", otherwise first "includes".
-          let match =
-            items.find(it => normalizeForSearch(it.display) === q) ||
-            items.find(it => normalizeForSearch(it.display).startsWith(q)) ||
-            items.find(it => normalizeForSearch(it.display).includes(q));
-
-          if (!match) {
-            selectEl.value = '';
-            updateConfirmEnabled();
-            return;
-          }
-
-          selectEl.value = match.value;
-          if (typeof onValidSelectionDisplay === 'function') {
-            onValidSelectionDisplay(match.display);
-          }
-          updateConfirmEnabled();
-        }
-
-        inputEl.addEventListener('change', tryResolveSelection);
-        inputEl.addEventListener('blur', tryResolveSelection);
-        inputEl.addEventListener('keydown', function (e) {
-          if (e.key !== 'Enter') return;
-          tryResolveSelection();
-        });
-
-        // If something else changes the select (future UI), keep input in sync.
-        selectEl.addEventListener('change', function () {
-          const items = (typeof getItems === 'function' ? getItems() : []) || [];
-          const match = items.find(it => it.value === selectEl.value);
-          if (match) inputEl.value = match.display;
-        });
-      }
-
-      // Current institution autocomplete
-      let currentInstitutionItems = [];
-      function currentInstitutionDisplayForOption(opt) {
-        const v = opt.value;
-        const label = currentInstitutionLabel(v);
-        return label || opt.textContent;
-      }
-      currentInstitutionItems = buildDatalistFromSelect(
-        currentInstitutionSelect,
-        currentInstitutionDatalist,
-        currentInstitutionDisplayForOption
-      );
-      attachAutocompleteBehavior(
-        currentInstitutionAutocomplete,
-        currentInstitutionSelect,
-        currentInstitutionDatalist,
-        function () { return currentInstitutionItems; },
-        function (display) { currentInstitutionAutocomplete.value = display; }
-      );
-
-      // Target program autocomplete
-      let targetProgramItems = [];
-      function rebuildTargetProgramAutocomplete() {
-        targetProgramItems = buildDatalistFromSelect(targetProgramSelect, targetProgramDatalist);
-      }
-      rebuildTargetProgramAutocomplete();
-      attachAutocompleteBehavior(
-        targetProgramAutocomplete,
-        targetProgramSelect,
-        targetProgramDatalist,
-        function () { return targetProgramItems; },
-        function (display) { targetProgramAutocomplete.value = display; }
-      );
-
-      // When we repopulate programs, refresh datalist items too.
-      const originalPopulateRooseveltPrograms = populateRooseveltPrograms;
-      populateRooseveltPrograms = function () {
-        originalPopulateRooseveltPrograms();
-        rebuildTargetProgramAutocomplete();
-      };
-
-      confirmBtn.addEventListener('click', function () {
-        const currentId = currentInstitutionSelect.value;
-        const targetId = targetInstitutionSelect.value;
-        const progVal = targetProgramSelect.value;
-
-        if (!currentId || targetId !== TARGET_INST_VALUE || !progVal) {
-          setSummary('Please select your current institution and a target program.', true);
+      function populateTargetProgramsForInstitution(institutionId) {
+        targetProgramSelect.innerHTML = '<option value="">Select Program</option>';
+        const filtered = allPrograms.filter(p => String(p.institutionId) === String(institutionId));
+        if (filtered.length === 0) {
+          targetProgramSelect.innerHTML = '<option value="">No programs for this institution</option>';
+          targetProgramSelect.disabled = true;
+          confirmBtn.disabled = true;
           return;
         }
+        filtered.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id || p.programId || p.programName;
+          opt.textContent = p.programName + ' (Institution ID: ' + p.institutionId + ')';
+          targetProgramSelect.appendChild(opt);
+        });
+        targetProgramSelect.disabled = false;
+        confirmBtn.disabled = !targetProgramSelect.value;
+      }
 
-        const currentLabel = currentInstitutionLabel(currentId);
-        const progName = selectedProgramName();
+      // Load data from backend
+      Promise.all([
+        fetch(baseApiUrl + '/institutions').then(r => r.json()),
+        fetch(baseApiUrl + '/programs').then(r => r.json())
+      ])
+        .then(([institutions, programs]) => {
+          allPrograms = programs || [];
+          populateInstitutions(institutions || []);
+          currentInstitutionSelect.disabled = false;
+          targetInstitutionSelect.disabled = false;
+          targetProgramSelect.disabled = true;
+          confirmBtn.disabled = true;
+          setSummary('Select your current and target institutions, then a target program.');
+        })
+        .catch(err => {
+          setSummary('Error loading institutions/programs: ' + err, true);
+          currentInstitutionSelect.innerHTML = '<option value="">Unable to load institutions</option>';
+          targetInstitutionSelect.innerHTML = '<option value="">Unable to load institutions</option>';
+          targetProgramSelect.innerHTML = '<option value="">Unable to load programs</option>';
+          currentInstitutionSelect.disabled = true;
+          targetInstitutionSelect.disabled = true;
+          targetProgramSelect.disabled = true;
+          confirmBtn.disabled = true;
+        });
+
+      // When target institution changes, load its programs
+      targetInstitutionSelect.addEventListener('change', () => {
+        const instId = targetInstitutionSelect.value;
+        if (!instId) {
+          targetProgramSelect.innerHTML = '<option value="">Select a target institution first</option>';
+          targetProgramSelect.disabled = true;
+          confirmBtn.disabled = true;
+          setSummary('Select a target institution to see available programs.');
+          return;
+        }
+        populateTargetProgramsForInstitution(instId);
+        setSummary('');
+      });
+
+      targetProgramSelect.addEventListener('change', () => {
+        confirmBtn.disabled = !targetProgramSelect.value;
+      });
+
+      confirmBtn.addEventListener('click', () => {
+        const currentInstId = currentInstitutionSelect.value;
+        const targetInstId = targetInstitutionSelect.value;
+        const targetProgValue = targetProgramSelect.value;
+
+        if (!currentInstId || !targetInstId || !targetProgValue) {
+          setSummary('Please select current institution, target institution, and a target program.', true);
+          return;
+        }
+        const currentInst = institutionsById[String(currentInstId)];
+        const targetInst = institutionsById[String(targetInstId)];
+        const targetProgram = allPrograms.find(p =>
+          String(p.institutionId) === String(targetInstId) &&
+          (String(p.id || p.programId || p.programName) === String(targetProgValue)
+        ));
+
+        const currentLabel = currentInst
+          ? currentInst.name + (currentInst.location ? ' (' + currentInst.location + ')' : '')
+          : 'Institution ' + currentInstId;
+
+        const targetLabel = targetInst
+          ? targetInst.name + (targetInst.location ? ' (' + targetInst.location + ')' : '')
+          : 'Institution ' + targetInstId;
+
+        const targetProgramLabel = targetProgram ? targetProgram.programName : 'Program ' + targetProgValue;
 
         setSummary(
           'Current: ' + currentLabel +
-          ' → Target: ' + TARGET_INST_LABEL +
-          ' | Target Program: ' + (progName || progVal)
+          ' → Target: ' + targetLabel +
+          ' | Target Program: ' + targetProgramLabel
         );
+
+        // Hook for integration: if you later want to navigate
+        // or call another API with this selection, you can do it here.
       });
     }
 
@@ -561,3 +291,4 @@
   </script>
 </body>
 </html>
+

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Program Director Dashboard</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS CDN -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  
+
+  <style>
+
+.director-header-overlay {
+
+  width: 100%;
+
+  height: 100%;
+
+  z-index: 0;
+
+}
+
+
+
+    /*general stlye*/
+
+    body {
+
+      background-color: #F7F9FF;
+
+    }
+
+    /*nav bar style*/
+
+    .navbar-custom {
+
+      background-color: #000000;
+
+    }
+
+    .navbar-custom .navbar-brand,
+
+    .navbar-custom .nav-link {
+
+      color: white;
+
+    }
+
+    .navbar-custom .nav-link:hover {
+
+      color: #f8f9fa;
+
+      background-color: #0056b3;
+
+      border-radius: 4px;
+
+    }
+
+    /*buttons*/
+
+    .logout-btn {
+
+      background-color: #dc3545 !important;
+
+      border-color: #dc3545;
+
+    }
+
+    .logout-btn:hover {
+
+      background-color: #b02a37 !important;
+
+      border-color: #b02a37;
+
+    }
+
+    /* Header Banner */
+
+    .director-header {
+
+      position: relative;
+
+      height: 300px;
+
+      background: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/055/Uni_students_-_Main.png') no-repeat center center/cover;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      overflow: hidden;
+
+      color: white;
+
+    }
+
+
+
+    .director-header::after {
+
+      content: "Program Director View"; /* Change text here */
+
+      position: absolute;
+
+      top: 50%;
+
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      font-family: 'Merriweather', serif;
+
+      font-size: 48px;
+
+      font-weight: 700;
+
+      z-index: 1;
+
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+    }
+
+    /*card section*/
+
+    .section-card {
+
+      margin-top: 20px;
+
+      padding: 20px;
+
+      border-radius: 8px;
+
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+      background-color: white;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-custom">
+
+    <a class="navbar-brand" href="index.html">Transfer Credit Match</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+
+      <span class="navbar-toggler-icon" style="color: white;">☰</span>
+
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+
+        <li class="nav-item"><a class="nav-link" href="match.html">Match</a></li>
+
+        <li class="nav-item">
+
+          <a class="btn btn-sm logout-btn text-white ml-2" href="index.html">Logout</a>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+  <!--header banner-->
+
+  <div class="director-header">
+
+    <div class="director-header-overlay"></div>
+
+  </div>
+
+
+
+  <!-- Main Content -->
+
+  <div class="container mt-5">
+
+    <div class="text-center mb-4">
+
+      <h1>Welcome, Program Director</h1>
+
+      <p class="text-muted">Manage transfer credits with ease.</p>
+
+    </div>
+
+
+
+    <div class="section-card">
+
+      <h3>Manage Institutions</h3>
+
+      <p>View and add institutions involved in transfer credit mapping.</p>
+
+      <div class="form-group">
+
+        <input type="text" id="institutionName" class="form-control mb-2" placeholder="Institution Name">
+
+        <input type="text" id="institutionLocation" class="form-control mb-2" placeholder="Location">
+
+        <button id="addInstitutionBtn" class="btn btn-primary">Add New Institution</button>
+
+        <p id="institutionResult" class="mt-2 text-success"></p>
+
+      </div>
+
+
+
+      <div id="institutionList" class="mt-4">
+
+        <h5>Existing Institutions</h5>
+
+        <ul class="list-group"></ul>
+
+      </div>
+
+    </div>
+
+  
+
+
+
+    <!--Programs-->
+
+    <div class="section-card">
+
+      <h3>Manage Programs</h3>
+
+      <p>Oversee programs and their transfer eligibility.</p>
+
+      <div class="form-group">
+
+        <input type="text" id="programName" class="form-control mb-2" placeholder="Program Name">
+
+        <select id="programInstitutionId" class="form-control mb-2">
+
+          <option value="">Select Institution</option>
+
+        </select>
+
+        <button id="addProgramBtn" class="btn btn-primary">Add New Program</button>
+
+        <p id="programResult" class="mt-2 text-success"></p>
+
+      </div>
+
+      <div id="programList" class="mt-4">
+
+        <h5>Existing Programs</h5>
+
+        <button id="loadProgramsBtn" class="btn btn-secondary btn-sm mb-2">Load Programs</button>
+
+        <ul class="list-group"></ul>
+
+      </div>
+
+    </div>
+
+
+
+    <!--Courses-->
+
+    <div class="section-card">
+
+      <h3>Manage Courses</h3>
+
+      <p>Review and approve courses for transfer credit.</p>
+
+      <div class="form-group">
+
+        <input type="text" id="courseName" class="form-control mb-2" placeholder="Course Name">
+
+        <input type="text" id="courseSkillEarned" class="form-control mb-2" placeholder="Skill Earned">
+
+        <button id="addCourseBtn" class="btn btn-primary">Add New Course</button>
+
+        <p id="courseResult" class="mt-2 text-success"></p>
+
+      </div>
+
+      <div id="courseList" class="mt-4">
+
+        <h5>Existing Courses</h5>
+
+        <ul class="list-group"></ul>
+
+      </div>
+
+    </div>
+
+
+
+    <!--KUs-->
+
+    <div class="section-card">
+
+      <h3>Add Knowledge Units</h3>
+
+      <p>Ensure courses cover required knowledge areas.</p>
+
+      <div class="form-group">
+
+        <input type="number" id="kuCourseId" class="form-control mb-2" placeholder="Course ID">
+
+        <input type="text" id="kuSkill" class="form-control mb-2" placeholder="Skill Earned">
+
+        <button id="addKuToCourseBtn" class="btn btn-primary">Add KUs to Course</button>
+
+        <p id="kuResult" class="mt-2 text-success"></p>
+
+      </div>
+
+      <div id="kuList" class="mt-4">
+
+        <h5>Existing KUs</h5>
+
+        <ul class="list-group"></ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Bootstrap JS and jQuery -->
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded',  () => {
+
+    loadInstitution();
+
+    //loadPrograms(); removed to put button instead
+
+    document.getElementById('loadProgramsBtn').addEventListener('click', loadPrograms);
+
+    loadCourses();
+
+    loadKUs();
+
+    //populateAssignDropdowns();
+
+
+
+//fetch and populae instiution drop down
+
+function loadInstitution() {
+
+  fetch('http://localhost:8080/api/institutions')
+
+    .then(res => res.json())
+
+    .then(institutions => {
+
+      const list = document.querySelector('#institutionList ul');
+
+      const dropdown = document.getElementById('programInstitutionId');
+
+      list.innerHTML = ''; //clear previous list
+
+      dropdown.innerHTML = '<option value="">Select Institution</option>';
+
+      institutions.forEach(inst => {
+
+      const li = document.createElement('li');
+
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+      li.innerHTML = `${inst.name} (${inst.location})`;
+
+        list.appendChild(li);
+
+
+
+      const option = document.createElement('option');
+
+      option.value = inst.institutionId;
+
+      option.textContent = `${inst.name} (${inst.location})`;
+
+      dropdown.appendChild(option);
+
+      });
+
+ });
+
+}
+
+
+
+function loadPrograms() {
+
+  fetch('http://localhost:8080/api/programs')
+
+   .then(res => res.json())
+
+   .then(programs => {
+
+    const list = document.querySelector('#programList ul');
+
+    list.innerHTML = '';
+
+    programs.forEach(p => {
+
+      const li = document.createElement('li');
+
+      li.className = 'list-group-item';
+
+      li.textContent = `${p.programName} (Institution ID: ${p.institutionId})`;
+
+      list.appendChild(li);
+
+     });
+
+   });
+
+  }
+
+
+
+  function loadCourses() {
+
+   fetch('http://localhost:8080/api/courses')
+
+    .then(res => {
+
+      if (!res.ok) throw new Error("failed to fetch courses");
+
+      return res.json();
+
+    })
+
+    .then(courses => {
+
+    const list = document.querySelector('#courseList ul');
+
+    list.innerHTML = '';
+
+    courses.forEach(course => {
+
+      const li = document.createElement('li');
+
+      li.className = 'list-group-item';
+
+      li.textContent = `${course.name} - Skill: ${course.skillEarned}`;
+
+      list.appendChild(li);
+
+     });
+
+   });
+
+ }
+
+
+
+ function loadKUs() {
+
+  fetch('http://localhost:8080/api/knowledge_units')
+
+  .then(res => res.json())
+
+    .then(data => {
+
+      const kuList = document.querySelector('#kuList ul');
+
+      kuList.innerHTML = '';
+
+
+
+      if (data.length === 0) {
+
+        const li = document.createElement('li');
+
+        li.textContent = 'No knowledge units available.';
+
+        kuList.appendChild(li);
+
+        return;
+
+      }
+
+
+
+      data.forEach(ku => {
+
+        const li = document.createElement('li');
+
+        li.textContent = `${ku.kuName}: ${ku.kuDescription}`;
+
+        kuList.appendChild(li);
+
+      });
+
+    })
+
+    .catch(error => {
+
+      console.error('Error loading Knowledge Units:', error);
+
+    });
+
+}
+
+
+
+// Add new institurion submission
+
+document.getElementById('addInstitutionBtn').addEventListener('click', () => {
+
+  const name = document.getElementById('institutionName').value;
+
+  const location = document.getElementById('institutionLocation').value;
+
+
+
+  fetch('http://localhost:8080/api/institutions', {
+
+    method: 'POST',
+
+    headers: { 'Content-Type': 'application/json' },
+
+    body: JSON.stringify({ name, location })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    document.getElementById('institutionResult').innerText = `Added: ${data.name}, ${data.location}`;
+
+    //clear input fields
+
+    document.getElementById('institutionName').value = '';
+
+    document.getElementById('institutionLocation').value = '';
+
+
+
+    //refresh list and dropdowns
+
+    loadInstitution();
+
+
+
+  })
+
+  .catch(err => {
+
+    document.getElementById('institutionResult').innerText = "Error: " + err;
+
+  });
+
+});
+
+
+
+// Program Submission
+
+document.getElementById('addProgramBtn').addEventListener('click', () => {
+
+  const programName = document.getElementById('programName').value;
+
+  const institutionId = parseInt(document.getElementById('programInstitutionId').value);
+
+
+
+  fetch('http://localhost:8080/api/programs', {
+
+    method: 'POST',
+
+    headers: { 'Content-Type': 'application/json' },
+
+    body: JSON.stringify({ programName, institutionId })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    document.getElementById('programResult').innerText = `Added: ${data.programName} (Institution ID: ${data.institutionId})`;
+
+    document.getElementById('programName').value = '';
+
+    document.getElementById('programInstitutionId').value = '';
+
+    loadPrograms();
+
+  })
+
+  .catch(err => {
+
+    document.getElementById('programResult').innerText = "Error: " + err;
+
+  });
+
+});
+
+
+
+// Courses submission
+
+document.getElementById('addCourseBtn').addEventListener('click', () => {
+
+  const name = document.getElementById('courseName').value;
+
+  const skillEarned = document.getElementById('courseSkillEarned').value;
+
+
+
+  fetch('http://localhost:8080/api/courses', {
+
+    method: 'POST',
+
+    headers: { 'Content-Type': 'application/json' },
+
+    body: JSON.stringify({ name, skillEarned })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    document.getElementById('courseResult').innerText = `Added Course: ${data.name} - ${data.skillEarned}`;
+
+    document.getElementById('courseName').value = '';
+
+    document.getElementById('courseSkillEarned').value = '';
+
+    loadCourses();
+
+  })
+
+  .catch(err => {
+
+    document.getElementById('courseResult').innerText = "Error: " + err;
+
+  });
+
+});
+
+
+
+//KU submission
+
+document.getElementById('addKuToCourseBtn').addEventListener('click', () => {
+
+  const courseId = parseInt(document.getElementById('kuCourseId').value);
+
+  const skillEarned = document.getElementById('kuSkill').value;
+
+
+
+  fetch(`http://localhost:8080/api/knowledge_units`, {
+
+    method: 'PUT',
+
+    headers: { 'Content-Type': 'application/json' },
+
+    body: JSON.stringify({ skillEarned, course:{id: courseId} })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    document.getElementById('kuResult').innerText = `Updated Course ${data.id} Skill: ${data.skillEarned}`;
+
+    document.getElementById('kuCourseId').value = '';
+
+    document.getElementById('kuSkill').value = '';
+
+    loadKUs();
+
+  })
+
+  .catch(err => {
+
+    document.getElementById('kuResult').innerText = "Error: " + err;
+
+  });
+
+});
+
+
+
+});
+
+</script>
+
+<footer class="bg-success bg-gradient text-white text-center py-0.5">
+
+  <p>© 2025 Transfer Credit Match. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+
+</html>

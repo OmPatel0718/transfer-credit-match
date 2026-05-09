@@ -33,11 +33,8 @@ public class AuthService {
         user.setEmail(email);
         user.setPasswordHash(rawPassword);
 
-        // Public registration only allows student accounts.
-        String sanitizedRole = role == null ? "student" : role.toLowerCase().trim();
-        if (!"student".equals(sanitizedRole)) {
-            throw new RuntimeException("Public registration can only create student accounts.");
-        }
+        // Convert role to lowercase before valueOf
+        String sanitizedRole = role.toLowerCase().trim();
         user.setRole(User.Role.valueOf(sanitizedRole));
 
         // 3. Save to DB

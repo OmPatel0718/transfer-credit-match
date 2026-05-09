@@ -1,0 +1,23 @@
+user_id,name,email,password_hash,role,created_at
+1,Alice Johnson,alice.johnson@roosevelt.edu,hashed_password_1,director,2026-02-16 20:22:20
+2,Bob Smith,bob.smith@hwc.edu,hashed_password_2,director,2026-02-16 20:22:20
+3,Charlie Davis,charlie.davis@roosevelt.edu,hashed_password_3,student,2026-02-16 20:22:20
+4,Diana Lee,diana.lee@hwc.edu,hashed_password_4,student,2026-02-16 20:22:20
+5,Eve Thompson,eve.thompson@admin.com,hashed_password_5,admin,2026-02-16 20:22:20
+6,Sam Harper,sam.harper@roosevelt.edu,hashed_password_6,student,2026-02-16 20:22:20
+7,Liam Carter,liam.carter@hwc.edu,hashed_password_7,student,2026-02-16 20:22:20
+8,Elena Brooks,elena.brooks@roosevelt.edu,hashed_password_8,student,2026-02-16 20:22:20
+9,Mason Reed,mason.reed@hwc.edu,hashed_password_9,student,2026-02-16 20:22:20
+10,Sophia Bennett,sophia.bennett@roosevelt.edu,hashed_password_10,director,2026-02-16 20:22:20
+11,Ethan Hayes,ethan.hayes@hwc.edu,hashed_password_11,director,2026-02-16 20:22:20
+12,Amara Santos,amara.santos@NLU.edu,hashed_password_13,student,2026-02-16 20:22:20
+13,Kai Mendoza,kai.mendoza@NLU.edu,hashed_password_14,student,2026-02-16 20:22:20
+14,Elliot Harper,elliot.harper@NLU.edu,hashed_password_15,student,2026-02-16 20:22:20
+15,Arjun Patel,arjun.patel@uofc.edu,hashed_password_16,student,2026-02-16 20:22:20
+16,Amina Hassan,amina.hassan@uofc.edu,hashed_password_17,student,2026-02-16 20:22:20
+17,Carter Hayes,carter.hayes@uofc.edu,hashed_password_18,student,2026-02-16 20:22:20
+18,Morgan Blake,morgan.blake@NLU.edu,hashed_password_19,director,2026-02-16 20:22:20
+19,Jordan Grant,jordan.grant@uofc.edu,hashed_password_20,director,2026-02-16 20:22:20
+20,Mike Wells,mike.wells@admin.com,hashed_password_21,admin,2026-02-16 20:22:20
+21,Susan Bennett,susan.bennett@admin.com,hashed_password_22,admin,2026-02-16 20:22:20
+22,Chloe Dawson,chloe.dawson@admin.com,hashed_password_12,admin,2026-02-16 20:22:20

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - Transfer Credit Match</title>
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body {
+      background: #F8F9FA
+;
+      padding-top: 60px;
+    }
+    .hero {
+      background: url('assets/about-bg.jpg') no-repeat center center;
+      background-size: cover;
+      color: white;
+      padding: 100px 0;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+    .section-title {
+      margin-bottom: 40px;
+      font-weight: 700;
+    }
+    .content-section {
+      padding: 60px 0;
+    }
+    .director-header-overlay {
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+}
+    .director-header {
+      position: relative;
+      height: 300px;
+      background: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/055/Uni_students_-_Main.png') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      color: white;
+    }    .director-header::after {
+      content: "About Transfer Credit Match"; /* Change text here */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Merriweather', serif;
+      font-size: 48px;
+      font-weight: 700;
+      z-index: 1;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Transfer Credit Match</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="auth.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>  <!--header banner-->
+    <div class="director-header">
+      <div class="director-header-overlay"></div>
+    </div>  <!-- Content Section -->
+  <section class="content-section">
+    <div class="container">
+      <h2 class="section-title text-center">Our Mission</h2>
+      <p class="text-center">Transfer Credit Match is designed to streamline the process of transferring academic credits. By mapping Knowledge Units (KUs) to courses and implementing smoother transitions between institutions.</p>
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <h4>Efficient Credit Transfers</h4>
+          <p>Our system analyzes the content of courses to determine if they meet the requirements for a direct transfer of credits.</p>
+        </div>
+        <div class="col-md-6">
+          <h4>Secure & Reliable</h4>
+          <p>Built with security in mind, our backend ensures that user data and academic records are protected through role-based access and robust authentication mechanisms.</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <h4>User-Friendly Interface</h4>
+          <p>We have developed user-friendly APIs and a simple frontend that allow administrators and students to interact with the system easily.</p>
+        </div>
+        <div class="col-md-6">
+          <h4>Scalable and Extensible</h4>
+          <p>Our architecture not only supports transfer credits but can be extended to include additional educational services, such as course enrollment, performance tracking, and m>
+        </div>
+      </div>
+</div>
+  </section>
+  <!-- Footer -->
+  <footer class="bg-success bg-gradient text-white text-center py-0.5">
+    <p>© 2025 Transfer Credit Match. All Rights Reserved.</p>
+  </footer>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

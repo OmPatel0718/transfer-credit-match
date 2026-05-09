@@ -10,7 +10,4 @@ import java.util.List;
 public interface CourseKuRepository extends JpaRepository<CourseKu, CourseKuKey> {
     // Custom method to get all CourseKu entries for a given course
     List<CourseKu> findAllByCourseId(Integer courseId);
-    List<CourseKu> findAllByKuId(Integer kuId);
-    boolean existsByCourseIdAndKuId(Integer courseId, Integer kuId);
-    void deleteByCourseIdAndKuId(Integer courseId, Integer kuId);
 }

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Course Matching Demo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <style>
+
+    .director-header-overlay {
+
+      width: 100%;
+
+      height: 100%;
+
+      z-index: 0;
+
+}
+
+.director-header {
+
+      position: relative;
+
+      height: 300px;
+
+      background: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/055/Uni_students_-_Main.png') no-repeat center center/cover;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      overflow: hidden;
+
+      color: white;
+
+    }
+
+
+
+    .director-header::after {
+
+      content: "Course Matching"; /* Change text here */
+
+      position: absolute;
+
+      top: 50%;
+
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      font-family: 'Merriweather', serif;
+
+      font-size: 48px;
+
+      font-weight: 700;
+
+      z-index: 1;
+
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+    }
+
+    
+
+    /* Ensure the body has enough top padding so the fixed-top navbar doesn't overlap content. */
+
+    body {
+
+      background: #F8F9FA;
+
+      padding-top: 70px; /* Adjust if your navbar is taller */
+
+    }
+
+    .hero-section {
+
+      background-color: #E9ECEF;
+
+      padding: 40px 0; /* Similar to index.html hero spacing */
+
+      text-align: center;
+
+      margin-bottom: 30px;
+
+    }
+
+    .hero-section h1 {
+
+      font-size: 2.5rem;
+
+      font-weight: 700;
+
+    }
+
+    .container {
+
+      max-width: 600px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+
+    <div class="container">
+
+      <a class="navbar-brand" href="index.html">Transfer Credit Match</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <span class="navbar-toggler-icon"></span>
+
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="director_view.html">Dashboard</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="auth.html">Logout</a></li>
+
+
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+
+  <!--header banner-->
+
+  <div class="director-header">
+
+    <div class="director-header-overlay"></div>
+
+  </div>
+
+
+
+  <!-- Optional Hero Section (matching the style of your index hero) -->
+
+  <section class="hero-section">
+
+    <div class="container">
+
+      <p class="lead">Enter two course IDs to see if they match for full credit.</p>
+
+    </div>
+
+  </section>
+
+  <!-- Main container for the form -->
+
+  <div class="container">
+
+    <form id="matchForm" class="bg-white p-4 rounded shadow-sm">
+
+      <div class="mb-3">
+
+        <label for="courseIdFrom" class="form-label">Course ID From</label>
+
+        <input type="number" id="courseIdFrom" class="form-control" required>
+
+      </div>
+
+      <div class="mb-3">
+
+        <label for="courseIdTo" class="form-label">Course ID To</label>
+
+        <input type="number" id="courseIdTo" class="form-control" required>
+
+      </div>
+
+      <!-- Email & Password fields for DB-based authentication -->
+
+      <div class="mb-3">
+
+        <label for="email" class="form-label">Email (for authentication)</label>
+
+        <input type="email" id="email" class="form-control" required>
+
+      </div>
+
+      <div class="mb-3">
+
+        <label for="password" class="form-label">Password (for authentication)</label>
+
+        <input type="password" id="password" class="form-control" required>
+
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Match Courses</button>
+
+    </form>
+
+    <div id="matchResult" class="mt-4"></div>
+
+  </div>
+
+  <script>
+
+    document.getElementById('matchForm').addEventListener('submit', function(e) {
+
+      e.preventDefault();
+
+      const courseIdFrom = document.getElementById('courseIdFrom').value;
+
+      const courseIdTo = document.getElementById('courseIdTo').value;
+
+      const email = document.getElementById('email').value.trim();
+
+      const password = document.getElementById('password').value.trim();
+
+      // Construct Basic Auth header
+
+      const authHeader = 'Basic ' + btoa(`${email}:${password}`);
+
+      fetch('http://localhost:8080/api/match', {
+
+        method: 'POST',
+
+        headers: {
+
+          'Content-Type': 'application/json',
+
+          'Authorization': authHeader
+
+        },
+
+        body: JSON.stringify({
+
+          courseIdFrom: Number(courseIdFrom),
+
+          courseIdTo: Number(courseIdTo)
+
+        })
+
+      })
+
+      .then(response => {
+
+        if (!response.ok) {
+
+          throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+
+        }
+
+        return response.text();
+
+      })
+
+      .then(data => {
+
+        document.getElementById('matchResult').innerHTML =
+
+          `<div class="alert alert-success">Match Result: ${data}</div>`;
+
+      })
+
+      .catch(error => {
+
+        document.getElementById('matchResult').innerHTML =
+
+          `<div class="alert alert-danger">Error: ${error.message}</div>`;
+
+      });
+
+    });
+
+  </script>
+
+  <!-- Bootstrap Bundle JS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  <footer class="bg-success bg-gradient text-white text-center py-0.5">
+
+    <p>© 2025 Transfer Credit Match. All Rights Reserved.</p>
+
+  </footer>
+
+</body>
+
+</html>

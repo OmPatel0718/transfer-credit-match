@@ -69,7 +69,6 @@ CREATE TABLE IF NOT EXISTS courses (
     course_name VARCHAR(255) NOT NULL,
     course_code VARCHAR(50) NOT NULL UNIQUE,
     credits INT NOT NULL,
-    skill_earned VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (institution_id) REFERENCES institutions(institution_id) ON DELETE CASCADE,
     FOREIGN KEY (program_id) REFERENCES programs(program_id) ON DELETE CASCADE
@@ -249,30 +248,30 @@ INSERT INTO programs (institution_id, program_name) VALUES
 ((SELECT institution_id FROM institutions WHERE name = 'City Colleges of Chicago'), 'Cyber Security and Information Assurance'),
 ((SELECT institution_id FROM institutions WHERE name = 'City Colleges of Chicago'), 'Computer Systems Technology');
 
--- Users (plain-text passwords match AuthService.login — use demo password below for every seeded account)
+-- Users
 INSERT INTO users (name, email, password_hash, role) VALUES 
-('Alice Johnson', 'alice.johnson@roosevelt.edu', 'demo123', 'director'),
-('Bob Smith', 'bob.smith@hwc.edu', 'demo123', 'director'),
-('Sophia Bennett', 'sophia.bennett@roosevelt.edu', 'demo123', 'director'),
-('Ethan Hayes', 'ethan.hayes@hwc.edu', 'demo123', 'director'),
-('Morgan Blake', 'morgan.blake@NLU.edu', 'demo123', 'director'),
-('Jordan Grant', 'jordan.grant@uofc.edu', 'demo123', 'director'),
-('Charlie Davis', 'charlie.davis@roosevelt.edu', 'demo123', 'student'),
-('Sam Harper', 'sam.harper@roosevelt.edu', 'demo123', 'student'),
-('Elena Brooks', 'elena.brooks@roosevelt.edu', 'demo123', 'student'),
-('Diana Lee', 'diana.lee@hwc.edu', 'demo123', 'student'),
-('Liam Carter', 'liam.carter@hwc.edu', 'demo123', 'student'),
-('Mason Reed', 'mason.reed@hwc.edu', 'demo123', 'student'),
-('Amara Santos', 'amara.santos@NLU.edu', 'demo123', 'student'),
-('Kai Mendoza', 'kai.mendoza@NLU.edu', 'demo123', 'student'),
-('Elliot Harper', 'elliot.harper@NLU.edu', 'demo123', 'student'),
-('Arjun Patel', 'arjun.patel@uofc.edu', 'demo123', 'student'),
-('Amina Hassan', 'amina.hassan@uofc.edu', 'demo123', 'student'),
-('Carter Hayes', 'carter.hayes@uofc.edu', 'demo123', 'student'),
-('Eve Thompson', 'eve.thompson@admin.com', 'demo123', 'admin'),
-('Chloe Dawson', 'chloe.dawson@admin.com', 'demo123', 'admin'),
-('Mike Wells', 'mike.wells@admin.com', 'demo123', 'admin'),
-('Susan Bennett', 'susan.bennett@admin.com', 'demo123', 'admin');
+('Alice Johnson', 'alice.johnson@roosevelt.edu', 'hashed_password_1', 'director'),
+('Bob Smith', 'bob.smith@hwc.edu', 'hashed_password_2', 'director'),
+('Sophia Bennett', 'sophia.bennett@roosevelt.edu', 'hashed_password_10', 'director'),
+('Ethan Hayes', 'ethan.hayes@hwc.edu', 'hashed_password_11', 'director'),
+('Morgan Blake', 'morgan.blake@NLU.edu', 'hashed_password_19', 'director'),
+('Jordan Grant', 'jordan.grant@uofc.edu', 'hashed_password_20', 'director'),
+('Charlie Davis', 'charlie.davis@roosevelt.edu', 'hashed_password_3', 'student'),
+('Sam Harper', 'sam.harper@roosevelt.edu', 'hashed_password_6', 'student'),
+('Elena Brooks', 'elena.brooks@roosevelt.edu', 'hashed_password_8', 'student'),
+('Diana Lee', 'diana.lee@hwc.edu', 'hashed_password_4', 'student'),
+('Liam Carter', 'liam.carter@hwc.edu', 'hashed_password_7', 'student'),
+('Mason Reed', 'mason.reed@hwc.edu', 'hashed_password_9', 'student'),
+('Amara Santos', 'amara.santos@NLU.edu', 'hashed_password_13', 'student'),
+('Kai Mendoza', 'kai.mendoza@NLU.edu', 'hashed_password_14', 'student'),
+('Elliot Harper', 'elliot.harper@NLU.edu', 'hashed_password_15', 'student'),
+('Arjun Patel', 'arjun.patel@uofc.edu', 'hashed_password_16', 'student'),
+('Amina Hassan', 'amina.hassan@uofc.edu', 'hashed_password_17', 'student'),
+('Carter Hayes', 'carter.hayes@uofc.edu', 'hashed_password_18', 'student'),
+('Eve Thompson', 'eve.thompson@admin.com', 'hashed_password_5', 'admin'),
+('Chloe Dawson', 'chloe.dawson@admin.com', 'hashed_password_12', 'admin'),
+('Mike Wells', 'mike.wells@admin.com', 'hashed_password_21', 'admin'),
+('Susan Bennett', 'susan.bennett@admin.com', 'hashed_password_22', 'admin');
 
 -- Directors
 INSERT INTO directors (user_id, institution_id) VALUES 

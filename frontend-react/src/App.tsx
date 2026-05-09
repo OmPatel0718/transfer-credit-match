@@ -26,14 +26,6 @@ function RequireAdmin({ children }: { children: JSX.Element }) {
   return children
 }
 
-function RequireLogin({ children }: { children: JSX.Element }) {
-  const { isLoggedIn } = useRoleView()
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />
-  }
-  return children
-}
-
 function App() {
   return (
     // Removed <BrowserRouter> from here
@@ -50,14 +42,7 @@ function App() {
             </RequireAdmin>
           }
         />
-        <Route
-          path="/match"
-          element={
-            <RequireLogin>
-              <MatchPage />
-            </RequireLogin>
-          }
-        />
+        <Route path="/match" element={<MatchPage />} />
         <Route path="/institutions" element={<InstitutionsPage />} />
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/about" element={<AboutPage />} />

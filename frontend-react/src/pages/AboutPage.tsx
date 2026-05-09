@@ -1,30 +1,23 @@
 import { Link } from 'react-router-dom';
 
-const NAV_GREEN = 'var(--nav-bg)';
-const LANDING_PAGE_GRADIENT = `
-  radial-gradient(
-    circle at bottom left,
-    rgba(34, 197, 94, 0.25) 0%,
-    rgba(34, 197, 94, 0.12) 25%,
-    rgba(255, 255, 255, 0.95) 60%
-  )
-`;
+const BRAND_TEAL = '#178581';
+
+const cardAccentColors = ['#178581', '#2e7d6b', '#66bb6a'];
 
 function AboutPage() {
   return (
-    <div style={{ minHeight: '100vh', background: LANDING_PAGE_GRADIENT }}>
-      <div
-        style={{
-          maxWidth: 1200,
-          width: '100%',
-          margin: '0 auto',
-          padding: 'clamp(1.25rem, 2vw, 2rem)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2.5rem',
-          boxSizing: 'border-box',
-        }}
-      >
+    <div
+      style={{
+        maxWidth: 1200,
+        width: '100%',
+        margin: '0 auto',
+        padding: 'clamp(1.25rem, 2vw, 2rem)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2.5rem',
+        boxSizing: 'border-box',
+      }}
+    >
       {/* Hero */}
       <section
         style={{
@@ -33,8 +26,8 @@ function AboutPage() {
           backgroundImage: 'none',
           borderRadius: '12px',
           textAlign: 'center',
-          borderBottom: `3px solid ${NAV_GREEN}`,
-          boxShadow: '0 4px 24px rgba(6, 88, 43, 0.12)',
+          borderBottom: `3px solid ${BRAND_TEAL}`,
+          boxShadow: '0 4px 24px rgba(23, 133, 129, 0.12)',
         }}
       >
         <h1
@@ -81,7 +74,7 @@ function AboutPage() {
                   fontSize: '0.75rem',
                   textTransform: 'uppercase',
                   letterSpacing: '0.06em',
-                  color: NAV_GREEN,
+                  color: BRAND_TEAL,
                   fontWeight: 600,
                   marginBottom: '0.2rem',
                 }}
@@ -99,13 +92,13 @@ function AboutPage() {
           style={{
             display: 'inline-block',
             padding: '0.65rem 1.35rem',
-            background: 'var(--nav-bg)',
+            background: BRAND_TEAL,
             color: '#fff',
             textDecoration: 'none',
             fontWeight: 600,
             fontSize: '0.95rem',
             borderRadius: '8px',
-            boxShadow: '0 2px 8px rgba(6, 88, 43, 0.35)',
+            boxShadow: '0 2px 8px rgba(23, 133, 129, 0.35)',
           }}
         >
           Try the match tool
@@ -119,7 +112,7 @@ function AboutPage() {
             fontSize: '0.8rem',
             textTransform: 'uppercase',
             letterSpacing: '0.12em',
-            color: NAV_GREEN,
+            color: BRAND_TEAL,
             fontWeight: 600,
           }}
         >
@@ -142,7 +135,7 @@ function AboutPage() {
               borderRadius: '10px',
               padding: '1.5rem',
               boxShadow: '0 2px 12px rgba(15, 23, 42, 0.06)',
-              borderTop: `4px solid ${NAV_GREEN}`,
+              borderTop: `4px solid ${cardAccentColors[0]}`,
             }}
           >
             <h2
@@ -152,7 +145,7 @@ function AboutPage() {
                 margin: '0 0 0.85rem',
                 color: '#1a202c',
                 paddingBottom: '0.5rem',
-                borderBottom: `2px solid ${NAV_GREEN}`,
+                borderBottom: `2px solid ${BRAND_TEAL}`,
                 display: 'inline-block',
                 width: '100%',
                 boxSizing: 'border-box',
@@ -180,7 +173,7 @@ function AboutPage() {
               background: '#fff',
               borderWidth: '4px 1px 1px',
               borderStyle: 'solid',
-              borderColor: 'var(--nav-bg)',
+              borderColor: 'rgba(46, 125, 107, 1)',
               borderRadius: '10px',
               padding: '1.5rem',
               boxShadow: '0 2px 12px rgba(15, 23, 42, 0.06)',
@@ -193,7 +186,7 @@ function AboutPage() {
                 margin: '0 0 0.85rem',
                 color: '#1a202c',
                 paddingBottom: '0.5rem',
-                borderBottom: `2px solid ${NAV_GREEN}`,
+                borderBottom: `2px solid ${BRAND_TEAL}`,
                 display: 'inline-block',
                 width: '100%',
                 boxSizing: 'border-box',
@@ -230,7 +223,7 @@ function AboutPage() {
               background: '#fff',
               borderWidth: '4px 1px 1px',
               borderStyle: 'solid',
-              borderColor: 'var(--nav-bg)',
+              borderColor: 'rgba(46, 125, 107, 1)',
               borderRadius: '10px',
               padding: '1.5rem',
               boxShadow: '0 2px 12px rgba(15, 23, 42, 0.06)',
@@ -243,7 +236,7 @@ function AboutPage() {
                 margin: '0 0 0.85rem',
                 color: '#1a202c',
                 paddingBottom: '0.5rem',
-                borderBottom: `2px solid ${NAV_GREEN}`,
+                borderBottom: `2px solid ${BRAND_TEAL}`,
                 display: 'inline-block',
                 width: '100%',
                 boxSizing: 'border-box',
@@ -267,20 +260,19 @@ function AboutPage() {
         </section>
       </div>
 
-        <div style={{ textAlign: 'center', paddingBottom: '0.25rem' }}>
-          <Link
-            to="/match"
-            style={{
-              color: NAV_GREEN,
-              fontWeight: 600,
-              textDecoration: 'none',
-              borderBottom: `2px solid ${NAV_GREEN}`,
-              paddingBottom: '2px',
-            }}
-          >
-            Start matching your credits
-          </Link>
-        </div>
+      <div style={{ textAlign: 'center', paddingBottom: '0.25rem' }}>
+        <Link
+          to="/match"
+          style={{
+            color: BRAND_TEAL,
+            fontWeight: 600,
+            textDecoration: 'none',
+            borderBottom: `2px solid ${BRAND_TEAL}`,
+            paddingBottom: '2px',
+          }}
+        >
+          Start matching your credits
+        </Link>
       </div>
     </div>
   );

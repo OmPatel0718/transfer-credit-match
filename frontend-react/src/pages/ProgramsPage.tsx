@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getJson } from '../lib/api'
-import { useViewport } from '../context/ViewportContext'
 
 type ApiInstitution = {
   institutionId: number
@@ -21,37 +20,18 @@ type ProgramRow = {
   type: string
   location: string
   description: string
-  institutionName: string
-}
-
-type ApiCourse = {
-  courseId: number
-  courseCode: string
-  courseName: string
-  credits: number
+  programDetails: string
 }
 
 function ProgramsPage() {
   const navigate = useNavigate()
-  const { isMobile } = useViewport()
   const [programs, setPrograms] = useState<ProgramRow[]>([])
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState<string | null>(null)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLocation, setSelectedLocation] = useState('All')
-  const [selectedType, setSelectedType] = useState('All')
   const [expandedProgramId, setExpandedProgramId] = useState<number | null>(null)
-  const [programCourses, setProgramCourses] = useState<Record<number, ApiCourse[]>>({})
-  const [coursesLoading, setCoursesLoading] = useState<Record<number, boolean>>({})
-
-  function deriveProgramType(programName: string): string {
-    const n = programName.toLowerCase()
-    if (n.includes('certificate')) return 'Certificate'
-    if (n.includes('master') || n.includes('mba') || n.includes('ms ') || n.includes('m.s')) return 'Graduate'
-    if (n.includes('doctor') || n.includes('phd')) return 'Doctoral'
-    return 'Undergraduate'
-  }
 
   useEffect(() => {
     let cancelled = false
@@ -69,10 +49,10 @@ function ProgramsPage() {
           return {
             id: p.programId,
             name: p.programName,
-            type: deriveProgramType(p.programName),
+            type: '',
             location: loc,
             description: `Program at ${instName}.`,
-            institutionName: instName,
+            programDetails: `Institution: ${instName}. Transfer credit matching uses courses linked to this program in the database.`,
           }
         })
         setPrograms(rows)
@@ -105,17 +85,10 @@ function ProgramsPage() {
         program.description.toLowerCase().includes(searchTerm.toLowerCase())
 
       const matchesLocation = selectedLocation === 'All' || program.location === selectedLocation
-      const matchesType = selectedType === 'All' || program.type === selectedType
 
-      return matchesSearch && matchesLocation && matchesType
+      return matchesSearch && matchesLocation
     })
-  }, [programs, searchTerm, selectedLocation, selectedType])
-
-  const typeOptions = useMemo(() => {
-    const set = new Set<string>()
-    programs.forEach((program) => set.add(program.type))
-    return ['All', ...Array.from(set).sort()]
-  }, [programs])
+  }, [programs, searchTerm, selectedLocation])
 
   const handleStartMatching = (program: ProgramRow) => {
     navigate('/match', {
@@ -127,29 +100,13 @@ function ProgramsPage() {
     })
   }
 
-  const toggleDetails = async (programId: number) => {
-    if (expandedProgramId === programId) {
-      setExpandedProgramId(null)
-      return
-    }
-    setExpandedProgramId(programId)
-    if (programCourses[programId]) {
-      return
-    }
-    setCoursesLoading((prev) => ({ ...prev, [programId]: true }))
-    try {
-      const rows = await getJson<ApiCourse[]>(`/api/programs/${programId}/courses`)
-      setProgramCourses((prev) => ({ ...prev, [programId]: rows ?? [] }))
-    } catch {
-      setProgramCourses((prev) => ({ ...prev, [programId]: [] }))
-    } finally {
-      setCoursesLoading((prev) => ({ ...prev, [programId]: false }))
-    }
+  const toggleDetails = (programId: number) => {
+    setExpandedProgramId(expandedProgramId === programId ? null : programId)
   }
 
   return (
     <div style={pageStyle}>
-      <section style={isMobile ? { ...heroStyle, padding: '32px 16px 24px' } : heroStyle}>
+      <section style={heroStyle}>
         <h1 style={heroTitleStyle}>TRANSFER PROGRAMS</h1>
         <p style={heroSubtitleStyle}>
           Browse programs from participating institutions and start the transfer matching process.
@@ -178,21 +135,13 @@ function ProgramsPage() {
             onClick={() => {
               setSearchTerm('')
               setSelectedLocation('All')
-              setSelectedType('All')
             }}
           >
             SHOW ALL PROGRAMS
           </button>
 
-          <button
-            type="button"
-            style={secondaryTopButtonStyle}
-            onClick={() => {
-              const firstType = typeOptions.find((t) => t !== 'All') ?? 'All'
-              setSelectedType((prev) => (prev === 'All' ? firstType : 'All'))
-            }}
-          >
-            PROGRAMS BY TYPE: {selectedType.toUpperCase()}
+          <button type="button" style={secondaryTopButtonStyle}>
+            PROGRAMS BY TYPE
           </button>
         </div>
       </section>
@@ -204,21 +153,12 @@ function ProgramsPage() {
             placeholder="Search programs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={isMobile ? { ...searchInputStyle, minWidth: 0 } : searchInputStyle}
+            style={searchInputStyle}
             disabled={loading}
           />
 
-          <select
-            style={isMobile ? { ...selectStyle, minWidth: 0, width: '100%' } : selectStyle}
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            disabled={loading}
-          >
-            {typeOptions.map((type) => (
-              <option key={type} value={type}>
-                {type === 'All' ? 'Programs by Type (All)' : type}
-              </option>
-            ))}
+          <select style={selectStyle} defaultValue="">
+            <option value="">Programs by Type</option>
           </select>
         </div>
 
@@ -266,21 +206,7 @@ function ProgramsPage() {
               {expandedProgramId === program.id && (
                 <div style={detailsBoxStyle}>
                   <h4 style={detailsHeadingStyle}>Program details</h4>
-                  <p style={detailsTextStyle}>Institution: {program.institutionName}</p>
-                  {coursesLoading[program.id] && <p style={detailsTextStyle}>Loading courses...</p>}
-                  {!coursesLoading[program.id] && (
-                    <div style={{ marginTop: 8 }}>
-                      {(programCourses[program.id] ?? []).length === 0 ? (
-                        <p style={detailsTextStyle}>No courses currently linked to this program.</p>
-                      ) : (
-                        (programCourses[program.id] ?? []).slice(0, 6).map((course) => (
-                          <p key={course.courseId} style={detailsTextStyle}>
-                            {course.courseCode} - {course.courseName} ({course.credits} cr)
-                          </p>
-                        ))
-                      )}
-                    </div>
-                  )}
+                  <p style={detailsTextStyle}>{program.programDetails}</p>
                 </div>
               )}
             </div>

@@ -1,7 +1,6 @@
 package com.transfercreditmatch.controllers;
 
 import com.transfercreditmatch.dto.LoginRequest;
-import com.transfercreditmatch.dto.LoginResponse;
 import com.transfercreditmatch.dto.RegisterRequest;
 import com.transfercreditmatch.entities.User;
 import com.transfercreditmatch.services.AuthService;
@@ -54,20 +53,14 @@ public class AuthController {
      * }
      */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         try {
             User user = authService.login(request.getEmail(), request.getPassword());
-            LoginResponse response = new LoginResponse();
-            response.setUserId(user.getUserId());
-            response.setName(user.getName());
-            response.setEmail(user.getEmail());
-            response.setRole(user.getRole().name());
-            response.setMessage("Login successful");
-            return ResponseEntity.ok(response);
+            // Return a simple success message
+            return ResponseEntity.ok("Login successful for user: "
+                    + user.getName() + " with role: " + user.getRole());
         } catch (RuntimeException e) {
-            LoginResponse error = new LoginResponse();
-            error.setMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(error);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

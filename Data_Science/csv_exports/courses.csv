@@ -1,0 +1,26 @@
+course_id,institution_id,program_id,course_name,course_code,credits,created_at
+1,1,1,Data Structures and Algorithms,CS101,4,2026-02-16 20:24:01
+2,1,2,Network Security,CYB201,3,2026-02-16 20:24:01
+3,4,3,IT Fundamentals,IT101,3,2026-02-16 20:24:01
+4,4,4,Web Development,SD102,3,2026-02-16 20:24:01
+5,1,9,Computer Science I,CSIA 150,4,2026-02-16 20:24:01
+6,1,9,Intro to Prob. & Stats,CSIA 217,3,2026-02-16 20:24:01
+7,1,9,Python Script Programming,CSIA 236,3,2026-02-16 20:24:01
+8,1,9,Data Communications,CSIA 246,3,2026-02-16 20:24:01
+9,1,9,Computer Science II,CSIA 250,4,2026-02-16 20:24:01
+10,1,9,Open Source Communities,CSIA 255,3,2026-02-16 20:24:01
+11,1,9,Computer Organization,CSIA 261,3,2026-02-16 20:24:01
+12,1,9,Computer Networking,CSIA 301,3,2026-02-16 20:24:01
+13,1,9,Operating Systems,CSIA 317,3,2026-02-16 20:24:01
+14,1,9,UNIX and System Administration,CSIA 318,3,2026-02-16 20:24:01
+15,1,9,Cyber Ops,CSIA 319,3,2026-02-16 20:24:01
+16,1,9,Software Engineering,CSIA 327,3,2026-02-16 20:24:01
+17,1,9,Database Systems,CSIA 333,3,2026-02-16 20:24:01
+18,1,9,Ethical Hack & Countermeasures,CSIA 335,3,2026-02-16 20:24:01
+19,1,9,Practical Computing with Data in Python,CSIA 336,3,2026-02-16 20:24:01
+20,1,9,Network Design,CSIA 352,3,2026-02-16 20:24:01
+21,1,9,Introduction to Programming,CSIA 354,3,2026-02-16 20:24:01
+22,1,9,Applied Cryptography,CSIA 355,3,2026-02-16 20:24:01
+23,1,9,Intro to Computer Security,CSIA 359,3,2026-02-16 20:24:01
+24,1,9,Internet Security,CSIA 368,3,2026-02-16 20:24:01
+25,1,9,Senior Project,CSIA 399,3,2026-02-16 20:24:01
